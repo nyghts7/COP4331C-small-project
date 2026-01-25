@@ -14,15 +14,37 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up SSH (key + known_hosts)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          # Write private key
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          # Confirm the file exists (won't print key)
+          ls -l ~/.ssh/id_ed25519
+
+          # Add host keys (try ed25519, rsa, ecdsa)
+          ssh-keyscan -t ed25519,rsa,ecdsa -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
+
+          # Confirm we captured something
+          wc -l ~/.ssh/known_hosts
+
       - name: Test SSH connection
+        shell: bash
         run: |
           ssh -i ~/.ssh/id_ed25519 \
             -o StrictHostKeyChecking=yes \
             -o BatchMode=yes \
             -o ConnectTimeout=10 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "whoami && hostname && pwd"
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "whoami && hostname"
 
-      - name: Deploy via rsync (exclude secrets)
+      - name: Deploy via rsync
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes" \
