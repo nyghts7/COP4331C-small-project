@@ -14,16 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up SSH
+      - name: Test SSH connection
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=yes \
+            -o BatchMode=yes \
+            -o ConnectTimeout=10 \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "whoami && hostname && pwd"
 
       - name: Deploy via rsync (exclude secrets)
         run: |
           rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes" \
             --exclude '.git' \
             --exclude '.github' \
             --exclude '.env' \
@@ -31,4 +33,3 @@ jobs:
             --exclude 'node_modules' \
             ./ \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
-            
