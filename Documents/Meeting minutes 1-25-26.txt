@@ -1,0 +1,26 @@
+Meeting Notes from 1/25/26:
+
+Present: Julio, Luciano, Fabian, Tim
+
+Topics covered: what our roles are, what we each need to learn, general outline for what needs to be done,
+
+Colors lab seems to give a lot of what we need for this project:
+	web hosting, php files, javascript files, html files
+	similar functionality: 3 API points, each user has own set of colors, each 
+		user logs in, partial search matches
+
+Already got hosting and domain set up. Working on GitHub automatically pushing to server
+
+Front end: needs to know HTML/CSS and Javascript (look at example files and links posted in chat)
+
+Back end: needs to know PHP and SwaggerHub (look at example files and links posted in chat)
+
+Database: pretty much identical to Colors lab, need to make an ERD for the slides
+
+Not sure how to split tasks among groups: possibly break into 2 meeting groups as we develop, front end and back end to discuss who does what.
+
+Powerpoint slides: be sure to remember what you find interesting as we learn and develop, we will need to create a presentation later. Every person should talk max 1.5ish minutes?
+
+Lighthouse accessibility report - browser plugin to help check for accessibility issues. Keep in mind as we develop (for example: dyslexic friendly fonts, color-blind awareness)
+
+Need to ask professor about Gantt chart in the rubric.
