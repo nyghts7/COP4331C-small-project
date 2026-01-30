@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - main   # switch to production later if you want
+    paths-ignore:
+      - 'Documents/**' # Stops the workflow if ONLY this folder changes
+
 
 jobs:
   deploy:
@@ -53,5 +56,6 @@ jobs:
             --exclude '.env' \
             --exclude '.env.*' \
             --exclude 'node_modules' \
+            --exclude 'Documents/' \  # Guarantees folder is NEVER uploaded
             ./ \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
