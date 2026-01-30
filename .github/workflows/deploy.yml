@@ -56,6 +56,6 @@ jobs:
             --exclude '.env' \
             --exclude '.env.*' \
             --exclude 'node_modules' \
-            --exclude 'Documents/' \  # Guarantees folder is NEVER uploaded
+            --exclude 'Documents/' \
             ./ \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
