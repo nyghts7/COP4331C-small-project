@@ -255,3 +255,11 @@
   --bs-btn-disabled-border-color: #547792;
 }
 
+.navbar {
+  left: 0;
+  right: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+}
