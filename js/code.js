@@ -55,3 +55,7 @@ function doLogin(){
 	}
 
 }
+
+function clickSignUp(){
+    
+}
