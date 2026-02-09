@@ -1,0 +1,15 @@
+# Turn on the rewrite engine
+RewriteEngine On
+
+# 1. Map /users and /users/login to users.php
+# NC makes it case-insensitive; L stops processing further rules
+RewriteRule ^users/?$ users.php [NC,L]
+RewriteRule ^users/login/?$ users.php [NC,L]
+
+# 2. Map /contacts to contacts.php (Used for Search & Create)
+# QSA appends query strings like ?userId=12&search=Fra
+RewriteRule ^contacts/?$ contacts.php [NC,QSA,L]
+
+# 3. Map /contacts/{id} to contacts.php?id={id} (Used for Get, Update, Delete)
+# The ([0-9]+) capture group identifies the ID and passes it as $1
+RewriteRule ^contacts/([0-9]+)/?$ contacts.php?id=$1 [NC,QSA,L]
