@@ -10,10 +10,12 @@ Our site: https://poosdteam13.xyz
 # To Do
 
 ## Database 
+
 	- [ ] Create SQL Tables
 	- [ ] create ERD
 
 ## Front End
+
 	- [ ] Contacts page
 	- [ ] javascript for all pages
 		* Contacts will need JS to search and populate tables
@@ -23,12 +25,15 @@ Our site: https://poosdteam13.xyz
 		* accessibility should be higher
 
 ## Back End
+
 	- [ ] API points need to be done
 		* Any already started? Do we have requirements for the database tables? 
 		* (can have as many API points as we want, but can only demo 2 at presentation)
+
 	- [ ] SwaggerHub API Demonstration
 
 ## Project Manager
+
 	- [ ] PowerPoint Slides
 		* everyone should contribute to slides so you know what you're presenting.
 	- [ ] Gantt chart
