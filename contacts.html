@@ -13,11 +13,93 @@
     <link rel="stylesheet" href="assets/css/css/bss-overrides.css">
     <link rel="stylesheet" href="assets/css/css/Footer-Dark-Multi-Column-icons.css">
     <link rel="stylesheet" href="assets/css/css/Search-Input-Responsive-with-Icon.css">
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/tmp.js" defer></script>
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 
 <body>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <div id="app">
+        <h1 class="title">Contact List</h1>
+        <aside class="sidebar">
+            <div class="search-container">
+                <input type="text"
+                       id="searchInput"
+                       class="search-input"
+                       placeholder="Search names..."
+                       autocomplete="off" />
+
+                <button id="searchToggle" class="search-btn" aria-label="Search">
+                    🔍
+                </button>
+                <div id="searchResults" class="search-results"></div>
+                <nav id="contact-list" class="selector-list">
+                </nav>
+            </div>
+        </aside>
+
+        <main class="contact-list">
+            <div class="settings-wrapper">
+                <button class="add-btn"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-label="Contact"
+                        data-target="add">
+                    😐
+                </button>
+                <button class="contact-btn"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-label="Contact"
+                        data-target="info">
+                    👤
+                </button>
+                <button class="edit-btn"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-label="Edit"
+                        data-target="edit">
+                    ✏️
+                </button>
+                <button class="delete-btn"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-label="Delete"
+                        data-target="delete">
+                    ✏️
+                </button>
+                <button class="settings-btn" id="settingsBtn"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-label="Settings">
+                    ⚙️
+                </button>
+
+                <div class="dropdown" id="settingsMenu">
+                    <ul>
+                        <li><a href="#">Appearance(DarkMode)</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Sign out</a></li>
+                        <button type="button" id="logoutButton" class="buttons" onclick="doLogout();">Log Out</button>
+                    </ul>
+                </div>
+            </div>
+            <div class="contact">
+                DATA
+            </div>
+        </main>
+    </div>
 </body>
+
+<footer class="site-footer">
+    <span>© COP 4331C - Team 13: Aviel Dahaman - Luna Fuller - Tim Fulton - Julio Maldonado - Fabian Nunez - Luciano Paredes - Emmanuel Santiago </span>
+    <nav>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+    </nav>
+</footer>
 
 </html>
