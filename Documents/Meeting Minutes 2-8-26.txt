@@ -1,0 +1,41 @@
+Meeting Minutes 2/9/26 8pm
+
+Present: Aviel, Fabian, Manny, Luciano, Julio, Tim
+
+Database status? Not done.
+	-Aviel will email Luna again. 
+
+Next lab: team check in with instructors so we should have some progress to show. Our slot is the 4-4:50pm slot (for the whole team, regardless of what our normal lab slot is)
+
+Will fork GitHub to ensure everyone has access.
+
+New password for digital ocean droplet, made sure everyone can connect
+
+Back end:
+	-need database set up to test API in swagger
+	-2 end points created, users.php and contacts.php
+	-need to upload to GitHub once
+
+Front End stuff:
+	-Tim working on contacts page with Gmail-like layout
+	-Color scheme?
+		Video game theme? (Decided to keep current)
+	API login 
+		/users.php 
+		/contacts.php -Tim handling page, then we'll handle JS
+	-Fabian handling JS for register page (use API point /users.php)
+	-Aviel will finish JS for main/login page
+	-Will need to do JS for contacts page
+	-Pages currently have a forgot password link, remove those. Put it on the wish list 
+	-Bootstrap framework on top of HTML5/CSS one of recommendations by prof in slides
+
+Basic Features we need to address:
+	CRUD Operations
+	Contacts unique to login
+	Partial Searches
+	Sign Up
+	Rest of rubric
+
+Wishlist stuff beyond basic features
+
+Next meeting: Thursday 8pm (expect 30 minutes to address anything we want to talk about before the check in)
