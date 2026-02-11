@@ -1,9 +1,10 @@
-const urlBase = 'https://dahamancop4331.xyz/LAMPAPI';
+const urlBase = 'https://poosdteam13.xyz/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
 let firstName = "";
 let lastName = "";
+
 
 function doLogin(){ 
 	userId = 0;
@@ -19,7 +20,7 @@ function doLogin(){
 	var tmp = {login:login,password:password};
 	let jsonPayload = JSON.stringify( tmp );
 	
-	let url = urlBase + '/Login.' + extension;
+	let url = urlBase + '/login.' + extension;
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -44,7 +45,7 @@ function doLogin(){
 
 				saveCookie();
 	
-				window.location.href = "color.html";
+				window.location.href = "contacts.html";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -54,8 +55,4 @@ function doLogin(){
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
 
-}
-
-function clickSignUp(){
-    
 }

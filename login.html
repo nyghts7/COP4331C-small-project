@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Contant Manager</title>
+    <title>Contact Manager</title>
+    <script type="text/javascript" src="js/login.js"></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/bss-overrides.css">
     <link rel="stylesheet" href="assets/css/Footer-Dark-Multi-Column-icons.css">
@@ -40,8 +41,7 @@
                                 <form class="text-center" method="post">
                                     <div class="mb-3"><input class="form-control" type="email" name="loginName" placeholder="Email"></div>
                                     <div class="mb-3"><input class="form-control" type="password" name="loginPassword" placeholder="Password"></div>
-                                    <div class="mb-3"><button class="btn btn-primary w-100 d-block" type="submit">Login</button></div>
-                                    <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
+                                    <div class="mb-3"><button class="btn btn-primary w-100 d-block" onclick="doLogin();">Login</button></div>
                                 </form>
                             </div>
                         </div>
