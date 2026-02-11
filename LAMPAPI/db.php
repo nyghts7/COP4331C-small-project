@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$db   = 'ContactManager';
-$user = 'your_username';
-$pass = 'your_password';
+$db   = 'COP4331';
+$user = 'TheBeast';
+$pass = 'WeLoveCOP4331';
 
 try {
     // Basic connection string
