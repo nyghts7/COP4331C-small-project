@@ -6,22 +6,19 @@ switch ($method) {
         // Read or Search
         $userID = $_GET['UserID'] ?? null;
         $query = $_GET['query'] ?? ''; // Search string
-        $contactID = $_GET['ID'] ?? null; // For fetching a single contact
 
-        if ($contactID) {
-            // Get single contact
-            $stmt = $conn->prepare("SELECT * FROM Contacts WHERE ID = ?");
-            $stmt->bind_param("i", $contactID);
-        } else {
-            // Search/List contacts for a user
-            $searchTerm = "%$query%";
-            $stmt = $conn->prepare("SELECT * FROM Contacts WHERE UserID = ? AND (FirstName LIKE ? OR LastName LIKE ?)");
-            $stmt->bind_param("iss", $userID, $searchTerm, $searchTerm);
-        }
-        
-        $stmt->execute();
-        sendResponse($stmt->get_result()->fetch_all(MYSQLI_ASSOC));
-        break;
+		// Create the partial search string
+		$searchTerm = "%" . $query . "%";
+
+		// SQL: Must belong to user AND (match first name OR match last name)
+		$stmt = $conn->prepare("SELECT * FROM Contacts WHERE UserID = ? AND (FirstName LIKE ? OR LastName LIKE ?)");
+		
+		// Bind: 'i' for the UserID, 's' for both name placeholders
+		$stmt->bind_param("iss", $userID, $searchTerm, $searchTerm);
+		
+		$stmt->execute();
+		sendResponse($stmt->get_result()->fetch_all(MYSQLI_ASSOC));
+		break;
 
     case 'POST':
         // Create
