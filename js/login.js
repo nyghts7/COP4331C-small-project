@@ -42,10 +42,14 @@ function doLogin(){
 		
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
+				userId = jsonObject.userId;
+
 
 				saveCookie();
 	
 				window.location.href = "contacts.html";
+			} else {
+				document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -55,4 +59,13 @@ function doLogin(){
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
 
+}
+
+
+function saveCookie()
+{
+	let minutes = 20;
+	let date = new Date();
+	date.setTime(date.getTime()+(minutes*60*1000));	
+	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
 }
