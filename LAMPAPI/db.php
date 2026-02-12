@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 // Database Connection
-$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+$conn = new mysqli("localhost", "TheBeast", "PoosdTeam!@#", "ContactManager");
 if ($conn->connect_error) {
     sendResponse(["error" => "Database connection failed"], 500);
 }
