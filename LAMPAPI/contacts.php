@@ -4,7 +4,7 @@ require_once 'db.php';
 switch ($method) {
     case 'GET':
         // Read or Search
-        $userID = $_GET['UserID'] ?? null;
+        $userID = $_GET['userID'] ?? null;
         $query = $_GET['query'] ?? ''; // Search string
 
 		// Create the partial search string
