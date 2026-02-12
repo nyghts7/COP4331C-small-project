@@ -23,21 +23,22 @@ switch ($method) {
     case 'POST':
         // Create
         $data = getRequestData();
-		$stmt = $conn->prepare("INSERT INTO Contacts (UserID, FirstName, LastName, Email, PhoneNumber, Address) VALUES (?, ?, ?, ?, ?, ?)");
-		$stmt->bind_param("isssss", $data['UserID'], $data['FirstName'], $data['LastName'], $data['Email'], $data['PhoneNumber'], $data['Address']);
-		
-		if ($stmt->execute()) {
-			$data['ID'] = $conn->insert_id;
-			sendResponse($data, 201);
-		} else {
-			// Check if the failure was due to a duplicate entry
-			if ($conn->errno === 1062) {
-				sendResponse(["error" => "A contact with this information already exists."], 409);
-			} else {
-				sendResponse(["error" => "Could not create contact: " . $conn->error], 400);
-			}
-		}
-		break;
+        $stmt = $conn->prepare("INSERT INTO Contacts (UserID, FirstName, LastName, Email, PhoneNumber, Address) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssss", $data['UserID'], $data['FirstName'], $data['LastName'], $data['Email'], $data['PhoneNumber'], $data['Address']);
+        
+        try {
+            $stmt->execute();
+            $data['ID'] = $conn->insert_id;
+            sendResponse($data, 201);
+        } catch (mysqli_sql_exception $e) {
+			// MySQL error code for duplicate
+            if ($e->getCode() === 1062) {
+                sendResponse(["error" => "A contact with this information already exists."], 409);
+            } else {
+                sendResponse(["error" => "Could not create contact: " . $e->getMessage()], 400);
+            }
+        }
+        break;
 
     case 'PUT':
         // Update
