@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Contant Manager</title>
+    <title>Contact Manager</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/bss-overrides.css">
     <link rel="stylesheet" href="assets/css/Footer-Dark-Multi-Column-icons.css">
@@ -33,13 +33,13 @@
                             <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="firstName" placeholder="First Name" required=""></div>
                             <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="lastName" placeholder="Last Name" required=""></div>
                         </div>
-                        <div class="mb-3"><input class="form-control form-control-user" type="email" id="email" placeholder="Email Address" required=""></div>
+                        <div class="mb-3"><input class="form-control form-control-user" type="username" id="username" placeholder="Username" required=""></div>
                         <div class="mb-3 row">
                             <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" id="password" placeholder="Password" required=""></div>
                             <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="verifyPassword" placeholder="Repeat Password" required=""></div>
                         </div>
                         <div class="mb-3 row">
-                            <p id="emailErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
+                            <p id="usernameErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
                             <p id="passwordErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
                         </div>
 
@@ -54,17 +54,17 @@
                 </div>
             </div>
         </div><script>
-	let email = document.getElementById("email")
+	let username = document.getElementById("username")
 	let password = document.getElementById("password")
 	let verifyPassword = document.getElementById("verifyPassword")
 	let submitBtn = document.getElementById("submitBtn")
-	let emailErrorMsg = document.getElementById('emailErrorMsg')
+	let usernameErrorMsg = document.getElementById('usernameErrorMsg')
 	let passwordErrorMsg = document.getElementById('passwordErrorMsg')
 
 	function displayErrorMsg(type, msg) {
-		if(type == "email") {
-			emailErrorMsg.style.display = "block"
-			emailErrorMsg.innerHTML = msg
+		if(type == "username") {
+			usernameErrorMsg.style.display = "block"
+			usernameErrorMsg.innerHTML = msg
 			submitBtn.disabled = true
 		}
 		else {
@@ -75,9 +75,9 @@
 	}
 
 	function hideErrorMsg(type) {
-		if(type == "email") {
-			emailErrorMsg.style.display = "none"
-			emailErrorMsg.innerHTML = ""
+		if(type == "username") {
+			usernameErrorMsg.style.display = "none"
+			usernameErrorMsg.innerHTML = ""
 			submitBtn.disabled = true
 			if(passwordErrorMsg.innerHTML == "")
 				submitBtn.disabled = false
@@ -85,7 +85,7 @@
 		else {
 			passwordErrorMsg.style.display = "none"
 			passwordErrorMsg.innerHTML = ""
-			if(emailErrorMsg.innerHTML == "")
+			if(usernameErrorMsg.innerHTML == "")
 				submitBtn.disabled = false
 		}
 	}
@@ -122,13 +122,13 @@
 	})
 
 	// Validate email upon change
-	email.addEventListener("change", function() {
+	//email.addEventListener("change", function() {
 		// Check if the email is valid using a regular expression (string@string.string)
-		if(email.value.match(/^[^@]+@[^@]+\.[^@]+$/))
-			hideErrorMsg("email")
-		else
-			displayErrorMsg("email", "Invalid email")
-	});
+	//	if(email.value.match(/^[^@]+@[^@]+\.[^@]+$/))
+	//		hideErrorMsg("email")
+	//	else
+	//		displayErrorMsg("email", "Invalid email")
+	//});
 </script>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
