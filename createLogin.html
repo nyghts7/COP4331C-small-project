@@ -28,10 +28,10 @@
                     <div class="text-center">
                         <h4 class="text-dark mb-4">Account Sign Up</h4>
                     </div>
-                    <form class="user">
+                    <form class="user" onsubmit="event.preventDefault(); doRegister();">
                         <div class="mb-3 row">
-                            <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" placeholder="First Name" required=""></div>
-                            <div class="col-sm-6"><input class="form-control form-control-user" type="text" placeholder="Last Name" required=""></div>
+                            <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="firstName" placeholder="First Name" required=""></div>
+                            <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="lastName" placeholder="Last Name" required=""></div>
                         </div>
                         <div class="mb-3"><input class="form-control form-control-user" type="email" id="email" placeholder="Email Address" required=""></div>
                         <div class="mb-3 row">
@@ -41,7 +41,13 @@
                         <div class="mb-3 row">
                             <p id="emailErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
                             <p id="passwordErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
-                        </div><button class="btn btn-primary d-block w-100 btn-user" id="submitBtn" type="submit">Register Account</button>
+                        </div>
+
+                        <div class="mb-3">
+                            <span id="registerResult" class="text-danger"></span>
+                        </div>
+
+                        <button class="btn btn-primary d-block w-100 btn-user" id="submitBtn" type="submit">Register Account</button>
                         <hr>
                     </form>
                     <div class="text-center"><a class="small" href="login.html">Already have an account? Login!</a></div>
@@ -127,6 +133,7 @@
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script src="js/register.js"></script>
 </body>
 
 </html>
