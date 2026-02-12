@@ -5,7 +5,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+if (strtoupper($_SERVER['REQUEST_METHOD'] == 'OPTIONS')) {
     http_response_code(200);
     exit();
 }
@@ -16,7 +16,7 @@ if ($conn->connect_error) {
     sendResponse(["error" => "Database connection failed"], 500);
 }
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = strtoupper($_SERVER['REQUEST_METHOD']);
 
 function getRequestData() {
     return json_decode(file_get_contents('php://input'), true);
