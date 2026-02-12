@@ -4,7 +4,7 @@ require_once 'db.php';
 switch ($method) {
     case 'GET':
         // Read or Search
-        $userID = $_GET['userID'] ?? null;
+        $userID = $_GET['UserID'] ?? null;
         $query = $_GET['query'] ?? ''; // Search string
         $contactID = $_GET['ID'] ?? null; // For fetching a single contact
 
