@@ -7,7 +7,7 @@ function doRegister()
 	let lastName = document.getElementById("lastName").value.trim();
 	let login = document.getElementById("email").value.trim();
 	let password = document.getElementById("password").value;
-	let repeatPassword = document.getElementById("repeatPassword").value;
+	let repeatPassword = document.getElementById("verifyPassword").value;
 
 	let result = document.getElementById("registerResult");
 	result.innerHTML = "";
@@ -59,4 +59,5 @@ function doRegister()
 	};
 
 	xhr.send(jsonPayload);
+
 }
