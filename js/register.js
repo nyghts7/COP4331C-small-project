@@ -1,4 +1,4 @@
-const urlBase = 'http://poosdteam13.xyz/LAMPAPI';
+const urlBase = 'https://poosdteam13.xyz/LAMPAPI';
 const extension = 'php';
 
 function doRegister()
