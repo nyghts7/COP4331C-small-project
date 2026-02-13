@@ -143,40 +143,14 @@ function clearSearch() {
   if (searchResults) searchResults.style.display = "none";
 }
 
-function readCookie()
-{
-	userId = -1;
-	let data = document.cookie;
-	let splits = data.split(",");
-	for(var i = 0; i < splits.length; i++) 
-	{
-		let thisOne = splits[i].trim();
-		let tokens = thisOne.split("=");
-		if( tokens[0] == "firstName" )
-		{
-			firstName = tokens[1];
-		}
-		else if( tokens[0] == "lastName" )
-		{
-			lastName = tokens[1];
-		}
-		else if( tokens[0] == "userId" )
-		{
-			userId = parseInt( tokens[1].trim() );
-		}
-	}
-	
-  return userId
-}
-
-
 /* =========================
    Load Contacts
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const userId = readCookie(); // use YOUR cookie name
+  const userId = getCookie("userId"); // use YOUR cookie name
+
   if (!userId) {
     window.location.href = "index.html"; // or login page
     return;
@@ -239,7 +213,6 @@ function renderContactsList(contacts) {
   });
 }
 
-/*
 // Basic cookie helper
 function getCookie(name) {
   const parts = document.cookie.split(",").map(p => p.trim());
@@ -248,4 +221,3 @@ function getCookie(name) {
   }
   return "";
 }
-  */
