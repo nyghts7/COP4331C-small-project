@@ -47,7 +47,7 @@ function doLogin(){
 
 				saveCookie();
 	
-				window.location.href = "contacts.html";
+				window.location.href = "/contacts.html";
 			} else if (xhr.status === 401){
 				document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 			}
