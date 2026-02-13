@@ -143,40 +143,14 @@ function clearSearch() {
   if (searchResults) searchResults.style.display = "none";
 }
 
-function readCookie()
-{
-	userId = -1;
-	let data = document.cookie;
-	let splits = data.split(",");
-	for(var i = 0; i < splits.length; i++) 
-	{
-		let thisOne = splits[i].trim();
-		let tokens = thisOne.split("=");
-		if( tokens[0] == "firstName" )
-		{
-			firstName = tokens[1];
-		}
-		else if( tokens[0] == "lastName" )
-		{
-			lastName = tokens[1];
-		}
-		else if( tokens[0] == "userId" )
-		{
-			userId = parseInt( tokens[1].trim() );
-		}
-	}
-	
-  return userId
-}
-
-
 /* =========================
    Load Contacts
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const userId = readCookie(); // use YOUR cookie name
+  const userId = getCookie("userId"); // use YOUR cookie name
+
   if (!userId) {
     window.location.href = "index.html"; // or login page
     return;
@@ -187,16 +161,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function loadContacts(userId, query) {
-  const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
+  //const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
+
+  const url = "https://poosdteam13.xyz/LAMPAPI/contacts.php"
+  
+  var tmp = {UserID:userId,query:query};
+	let jsonPayload = JSON.stringify( tmp );
 
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
+  let response;
+  let contacts;
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState !== 4) return;
 
     if (xhr.status === 200) {
-      let response;
+      
       try {
         response = JSON.parse(xhr.responseText);
       } catch (e) {
@@ -204,14 +185,17 @@ function loadContacts(userId, query) {
         return;
       }
 
-      const contacts = Array.isArray(response) ? response : (response.data || []);
+      contacts = Array.isArray(response) ? response : (response.data || []);
       renderContactsList(contacts);
     } else {
       console.error("Failed to load contacts:", xhr.status, xhr.responseText);
     }
   };
 
-  xhr.send();
+  xhr.send(jsonPayload);
+
+  console.log(contacts[0]);
+  console.log(contacts[1]);
 }
 
 
@@ -231,7 +215,6 @@ function renderContactsList(contacts) {
   });
 }
 
-/*
 // Basic cookie helper
 function getCookie(name) {
   const parts = document.cookie.split(",").map(p => p.trim());
@@ -240,4 +223,3 @@ function getCookie(name) {
   }
   return "";
 }
-  */

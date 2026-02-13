@@ -47,7 +47,7 @@ function doLogin(){
 
 				saveCookie();
 	
-				window.location.href = "/contacts.html";
+				window.location.href = "contacts.html";
 			} else if (xhr.status === 401){
 				document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 			}
@@ -67,5 +67,5 @@ function saveCookie()
 	let minutes = 20;
 	let date = new Date();
 	date.setTime(date.getTime()+(minutes*60*1000));	
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ",expires=" + date.toGMTString();
 }
