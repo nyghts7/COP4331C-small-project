@@ -15,14 +15,16 @@
     <link rel="stylesheet" href="assets/css/css/Search-Input-Responsive-with-Icon.css">
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/tmp.js"></script>
+    <script type="text/javascript" src="js/tmp.js" defer></script>
     <link href="assets/css/styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 
 <body>
     <div id="app">
+
         <h1 class="title">Contact List</h1>
+
         <aside class="sidebar">
             <div class="search-container">
                 <input type="text"
@@ -31,63 +33,45 @@
                        placeholder="Search names..."
                        autocomplete="off" />
 
-                <button id="searchToggle" class="search-btn" aria-label="Search">
-                    🔍
-                </button>
+                <button id="searchToggle" class="search-btn">🔍</button>
                 <div id="searchResults" class="search-results"></div>
-                <nav id="contact-list" class="selector-list">
-                </nav>
             </div>
+            <nav class="selector-list">
+                <button class="selector-item">John Doe</button>
+                <button class="selector-item">Jane Doe</button>
+                <button class="selector-item">Mike Doe</button>
+            </nav>
         </aside>
 
-        <main class="contact-list">
-            <div class="settings-wrapper">
-                <button class="add-btn"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        aria-label="Contact"
-                        data-target="add">
-                    😐
-                </button>
-                <button class="contact-btn"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        aria-label="Contact"
-                        data-target="info">
-                    👤
-                </button>
-                <button class="edit-btn"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        aria-label="Edit"
-                        data-target="edit">
-                    ✏️
-                </button>
-                <button class="delete-btn"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        aria-label="Delete"
-                        data-target="delete">
-                    ✏️
-                </button>
-                <button class="settings-btn" id="settingsBtn"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        aria-label="Settings">
-                    ⚙️
-                </button>
+        <div class="icon">
+            <button class="add-btn" data-target="add-contact">😐</button>
+            <button class="contact-btn" data-target="contact-info">👤</button>
+            <button class="edit-btn" data-target="contact-edit">✏️</button>
+            <button class="delete-btn" data-target="delete-contact">✏️</button>
+            <button class="settings-btn" data-target="settings">⚙️</button>
+        </div>
 
-                <div class="dropdown" id="settingsMenu">
-                    <ul>
-                        <li><a href="#">Appearance(DarkMode)</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Sign out</a></li>
-                        <button type="button" id="logoutButton" class="buttons" onclick="doLogout();">Log Out</button>
-                    </ul>
-                </div>
+        <main class="contact-list">
+            <div class="tab" id="contact-add">
+                <img class="pfp-picture" src="pfp.png" alt="User Profile" style="display: none;">
+                <div class="pfp-placeholder">JD</div>
+                <p id="edit-info">DATA1</p>
             </div>
-            <div class="contact">
-                DATA
+            <div class="tab active" id="contact-contact">
+                <img class="pfp-picture" src="pfp.png" alt="User Profile" style="display: none;">
+                <div class="pfp-placeholder">JD</div>
+                <p>John - Doe<br />(123)-456-7890 - johndoe@example.com<br />Created Today@Now</p>
+            </div>
+            <div class="tab" id="contact-edit">
+                <img class="pfp-picture" src="pfp.png" alt="User Profile" style="display: none;">
+                <div class="pfp-placeholder">JD</div>
+                <p>DATA3</p>
+            </div>
+            <div class="tab" id="contact-delete">
+                <p>DATA4</p>
+            </div>
+            <div class="tab" id="settings-edit">
+                <p>DATA5</p>
             </div>
         </main>
     </div>
