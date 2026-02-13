@@ -219,7 +219,7 @@ function loadContacts(userId, query) {
 
   xhr.send(jsonPayload);
 
-  console.log(response);
+  console.log(contacts[0]);
 }
 
 
