@@ -1,3 +1,5 @@
+console.log("contacts page JS loaded");
+
 let userId = 0;
 let lastName = "";
 let firstName = "";
@@ -179,32 +181,68 @@ function readCookie()
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Example data for now (replace with API results later)
-  const contacts = data.results;
-  renderContactsList(contacts);
+
+  const userId = getCookie("userId"); // use YOUR cookie name
+  if (!userId) {
+    window.location.href = "index.html"; // or login page
+    return;
+  }
+
+  loadContacts(userId, "");
 
 });
 
-function renderContactsList(contacts) {
-  const list = document.getElementById("contact-list");
-  if (!list) return;
+function loadContacts(userId, query) {
+  // contacts.php expects: userID (capital D in PHP variable name doesn't matter in query string)
+  const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
 
-  // Clear anything currently there
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState !== 4) return;
+
+    if (xhr.status === 200) {
+      const response = JSON.parse(xhr.responseText);
+
+      // Depending on how sendResponse is implemented, it might be either:
+      // 1) an array:   [ {FirstName:..., ...}, ... ]
+      // 2) a wrapper:  { data: [ ... ] }
+      const contacts = Array.isArray(response) ? response : (response.data || []);
+
+      renderContactsList(contacts);
+    } else {
+      console.error("Failed to load contacts:", xhr.status, xhr.responseText);
+    }
+  };
+
+  xhr.send();
+}
+
+function renderContactsList(contacts) {
+  const list = document.getElementById("contact-list"); // THIS is the element to populate
+  if (!list) {
+    console.error("Missing #contact-list in contacts.html");
+    return;
+  }
+
   list.innerHTML = "";
 
   contacts.forEach((c) => {
-    // Create a clickable item for the sidebar
-    const item = document.createElement("button");
-    item.type = "button";
-    item.className = "contact-item"; // optional CSS class
-    item.textContent = `${c.firstName} ${c.lastName}`.trim();
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "contact-item";
+    btn.textContent = `${c.FirstName} ${c.LastName}`.trim(); // matches your DB column names
 
-    item.addEventListener("click", () => {
-      // When clicked, you can display details somewhere else
-      // For now, just log it:
-      console.log("Selected contact:", c);
-    });
-
-    list.appendChild(item);
+    list.appendChild(btn);
   });
+}
+
+// Basic cookie helper
+function getCookie(name) {
+  const parts = document.cookie.split(";").map(p => p.trim());
+  for (const part of parts) {
+    if (part.startsWith(name + "=")) return decodeURIComponent(part.substring(name.length + 1));
+  }
+  return "";
 }
