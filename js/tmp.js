@@ -142,7 +142,7 @@ function clearSearch() {
   if (searchInput) searchInput.value = "";
   if (searchResults) searchResults.style.display = "none";
 }
-
+/*
 function readCookie()
 {
 	userId = -1;
@@ -172,6 +172,7 @@ function readCookie()
 	}
 	
 }
+  */
 
 /* =========================
    Load Contacts
