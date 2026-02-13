@@ -269,3 +269,15 @@ html, body {
   opacity: 1;
 }
 
+#contact-list .contact-item{
+  width: 100%;
+  text-align: left;
+  border: none;
+  padding: 10px 12px;
+  background: transparent;
+  cursor: pointer;
+}
+
+#contact-list .contact-item:hover{
+  background: rgba(255,255,255,0.08);
+}

@@ -1,3 +1,9 @@
+let userId = 0;
+let lastName = "";
+let firstName = "";
+
+
+
 /* =========================
    SETTINGS DROPDOWN
 ========================= */
@@ -133,4 +139,72 @@ document.addEventListener("keydown", (e) => {
 function clearSearch() {
   if (searchInput) searchInput.value = "";
   if (searchResults) searchResults.style.display = "none";
+}
+
+function readCookie()
+{
+	userId = -1;
+	let data = document.cookie;
+	let splits = data.split(",");
+	for(var i = 0; i < splits.length; i++) 
+	{
+		let thisOne = splits[i].trim();
+		let tokens = thisOne.split("=");
+		if( tokens[0] == "firstName" )
+		{
+			firstName = tokens[1];
+		}
+		else if( tokens[0] == "lastName" )
+		{
+			lastName = tokens[1];
+		}
+		else if( tokens[0] == "userId" )
+		{
+			userId = parseInt( tokens[1].trim() );
+		}
+	}
+	
+	if( userId < 0 )
+	{
+		window.location.href = "index.html";
+	}
+	else
+	{
+		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+	}
+}
+
+/* =========================
+   Load Contacts
+========================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Example data for now (replace with API results later)
+  const contacts = data.results;
+  renderContactsList(contacts);
+
+});
+
+function renderContactsList(contacts) {
+  const list = document.getElementById("contact-list");
+  if (!list) return;
+
+  // Clear anything currently there
+  list.innerHTML = "";
+
+  contacts.forEach((c) => {
+    // Create a clickable item for the sidebar
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "contact-item"; // optional CSS class
+    item.textContent = `${c.firstName} ${c.lastName}`.trim();
+
+    item.addEventListener("click", () => {
+      // When clicked, you can display details somewhere else
+      // For now, just log it:
+      console.log("Selected contact:", c);
+    });
+
+    list.appendChild(item);
+  });
 }
