@@ -142,7 +142,7 @@ function clearSearch() {
   if (searchInput) searchInput.value = "";
   if (searchResults) searchResults.style.display = "none";
 }
-/*
+
 function readCookie()
 {
 	userId = -1;
@@ -166,13 +166,9 @@ function readCookie()
 		}
 	}
 	
-	if( userId < 0 )
-	{
-		window.location.href = "index.html";
-	}
-	
+  return userId
 }
-  */
+
 
 /* =========================
    Load Contacts
@@ -180,7 +176,7 @@ function readCookie()
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const userId = getCookie("userId"); // use YOUR cookie name
+  const userId = readCookie(); // use YOUR cookie name
   if (!userId) {
     window.location.href = "index.html"; // or login page
     return;
@@ -235,12 +231,13 @@ function renderContactsList(contacts) {
   });
 }
 
-
+/*
 // Basic cookie helper
 function getCookie(name) {
-  const parts = document.cookie.split(";").map(p => p.trim());
+  const parts = document.cookie.split(",").map(p => p.trim());
   for (const part of parts) {
     if (part.startsWith(name + "=")) return decodeURIComponent(part.substring(name.length + 1));
   }
   return "";
 }
+  */
