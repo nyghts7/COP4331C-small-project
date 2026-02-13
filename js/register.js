@@ -5,7 +5,7 @@ function doRegister()
 {
 	let firstName = document.getElementById("firstName").value.trim();
 	let lastName = document.getElementById("lastName").value.trim();
-	let login = document.getElementById("email").value.trim();
+	let login = document.getElementById("username").value.trim();
 	let password = document.getElementById("password").value;
 	let repeatPassword = document.getElementById("verifyPassword").value;
 

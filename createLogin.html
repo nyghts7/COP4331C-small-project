@@ -39,8 +39,8 @@
                             <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="verifyPassword" placeholder="Repeat Password" required=""></div>
                         </div>
                         <div class="mb-3 row">
-                            <p id="usernameErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
-                            <p id="passwordErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
+                            <p id="usernameErrorMsg" class="text-danger" style="display:none;"></p>
+							<p id="passwordErrorMsg" class="text-danger" style="display:none;"></p>
                         </div>
 
                         <div class="mb-3">
@@ -89,9 +89,53 @@
 				submitBtn.disabled = false
 		}
 	}
-	
-	// Validate password upon change
-	password.addEventListener("change", function() {
+
+	password.addEventListener("input", validatePasswords);
+	verifyPassword.addEventListener("input", validatePasswords);
+
+	function validatePasswords() {
+		const p1 = password.value;
+		const p2 = verifyPassword.value;
+
+		// If both are empty: hide message, keep submit disabled
+		if (p1.length === 0 && p2.length === 0){
+			passwordErrorMsg.style.display = "none";
+			passwordErrorMsg.textContent = "";
+			submitBtn.disabled = true;
+			return;
+		}
+
+		// Don’t show mismatch until they start typing the 2nd box
+		if (p2.length === 0) {
+			passwordErrorMsg.style.display = "none";
+			passwordErrorMsg.textContent = "";
+			submitBtn.disabled = true; // keep disabled until both valid
+			return;
+		}
+
+		if (p1 !== p2) {
+			passwordErrorMsg.style.display = "block";
+			passwordErrorMsg.textContent = "Passwords do not match";
+			submitBtn.disabled = true;
+			return;
+		}
+
+		if (p1.length < 8) {
+			passwordErrorMsg.style.display = "block";
+			passwordErrorMsg.textContent = "Password must be at least 8 characters long";
+			submitBtn.disabled = true;
+			return;
+		}
+
+		
+		passwordErrorMsg.style.display = "none";
+		passwordErrorMsg.textContent = "";
+		submitBtn.disabled = false;
+	}
+
+	/* Commenting out while I test the above code
+	// Validate password upon input change
+	password.addEventListener("input", function() {
 
 		// If password has no value, then it won't be changed and no error will be displayed
 		if(password.value.length == 0 && verifyPassword.value.length == 0) hideErrorMsg("password")
@@ -109,7 +153,14 @@
 		}
 	})
 	
-	verifyPassword.addEventListener("change", function() {
+	verifyPassword.addEventListener("input", function() {
+		// If they haven't started typing yet, don't show the error, but don't let submit be clickable
+		if (verifyPassword.value.length === 0) {
+			passwordErrorMsg.style.display = "none";
+			passwordErrorMsg.textContent = "";
+			submitBtn.disabled = true;
+		}
+
 		if(password.value !== verifyPassword.value)
 			displayErrorMsg("password", "Passwords do not match")
 		else {
@@ -120,7 +171,9 @@
 				displayErrorMsg("password", "Password must be at least 8 characters long")
 		}
 	})
+	*/
 
+	// Commented out by Aviel because we're switching to using Usernames instead of email addresses
 	// Validate email upon change
 	//email.addEventListener("change", function() {
 		// Check if the email is valid using a regular expression (string@string.string)
