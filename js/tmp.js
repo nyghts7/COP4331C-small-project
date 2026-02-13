@@ -197,6 +197,7 @@ function loadContacts(userId, query) {
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
   let response;
+  let contacts;
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState !== 4) return;
@@ -210,7 +211,7 @@ function loadContacts(userId, query) {
         return;
       }
 
-      const contacts = Array.isArray(response) ? response : (response.data || []);
+      contacts = Array.isArray(response) ? response : (response.data || []);
       renderContactsList(contacts);
     } else {
       console.error("Failed to load contacts:", xhr.status, xhr.responseText);
@@ -220,6 +221,7 @@ function loadContacts(userId, query) {
   xhr.send(jsonPayload);
 
   console.log(contacts[0]);
+  console.log(contacts[1]);
 }
 
 
