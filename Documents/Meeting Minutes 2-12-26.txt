@@ -1,0 +1,36 @@
+Meeting Minutes 2/12/26 8pm
+
+Present: Aviel, Tim, Luciano, Manny, Fabian, Julio
+
+Agenda: 
+What's working
+What's not
+What we can fix tonight for tomorrow
+What we need feedback on from the prof/TA
+
+
+What's working:
+	Database has been done by Aviel and Julio
+	API points
+	Login
+	Registration
+	Contacts.html 
+	register.js
+
+What's not working:
+	- Change email to usernames as a login broke some things
+	- Registration
+		- FIXED DURING MEETING
+		- script file ref needed to be at the top
+	- Login
+		- FIXED DURING MEETING
+		- login.html showed password in plaintext
+		- login.js had several errors
+		- login.php needed a minor tweaks
+
+Need to do:
+	- Javascript for contacts page (Tim has started) **HIGH PRIORITY**
+	- User input validation (particularly for username)
+	- Lighthouse accessibility reports
+
+
