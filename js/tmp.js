@@ -170,10 +170,7 @@ function readCookie()
 	{
 		window.location.href = "index.html";
 	}
-	else
-	{
-		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
-	}
+	
 }
 
 /* =========================
@@ -193,7 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function loadContacts(userId, query) {
-  // contacts.php expects: userID (capital D in PHP variable name doesn't matter in query string)
   const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
 
   const xhr = new XMLHttpRequest();
@@ -203,13 +199,15 @@ function loadContacts(userId, query) {
     if (xhr.readyState !== 4) return;
 
     if (xhr.status === 200) {
-      const response = JSON.parse(xhr.responseText);
+      let response;
+      try {
+        response = JSON.parse(xhr.responseText);
+      } catch (e) {
+        console.error("Bad JSON from contacts.php:", xhr.responseText);
+        return;
+      }
 
-      // Depending on how sendResponse is implemented, it might be either:
-      // 1) an array:   [ {FirstName:..., ...}, ... ]
-      // 2) a wrapper:  { data: [ ... ] }
       const contacts = Array.isArray(response) ? response : (response.data || []);
-
       renderContactsList(contacts);
     } else {
       console.error("Failed to load contacts:", xhr.status, xhr.responseText);
@@ -219,12 +217,10 @@ function loadContacts(userId, query) {
   xhr.send();
 }
 
+
 function renderContactsList(contacts) {
-  const list = document.getElementById("contact-list"); // THIS is the element to populate
-  if (!list) {
-    console.error("Missing #contact-list in contacts.html");
-    return;
-  }
+  const list = document.getElementById("contact-list");
+  if (!list) return;
 
   list.innerHTML = "";
 
@@ -232,11 +228,12 @@ function renderContactsList(contacts) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "contact-item";
-    btn.textContent = `${c.FirstName} ${c.LastName}`.trim(); // matches your DB column names
+    btn.textContent = `${c.FirstName ?? c.firstName ?? ""} ${c.LastName ?? c.lastName ?? ""}`.trim();
 
     list.appendChild(btn);
   });
 }
+
 
 // Basic cookie helper
 function getCookie(name) {
