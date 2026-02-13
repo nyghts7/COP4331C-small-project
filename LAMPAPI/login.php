@@ -13,9 +13,7 @@ if ($method === 'POST') {
         sendResponse(["error" => "Login and Password are required"], 400);
     }
 
-    $hash = password_hash($data['password'], PASSWORD_DEFAULT);
-
-    if ($user && password_verify($hash, $user['Password'])) {
+    if ($user && password_verify($data['password'], $user['Password'])) {
         unset($user['Password']);
         sendResponse($user, 200);
     } else {
