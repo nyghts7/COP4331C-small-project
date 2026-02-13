@@ -187,16 +187,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function loadContacts(userId, query) {
-  const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
+  //const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
 
+  const url = "https://poosdteam13.xyz/LAMPAPI/contacts.php"
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
+  let response;
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState !== 4) return;
 
     if (xhr.status === 200) {
-      let response;
+      
       try {
         response = JSON.parse(xhr.responseText);
       } catch (e) {
