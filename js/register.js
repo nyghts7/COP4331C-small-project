@@ -13,7 +13,7 @@ function doRegister()
 	result.innerHTML = "";
 
 	// Ensure all fields are populated
-	if(firstName === "" || lastName === "" || email === "" || password === "" || repeatPassword === "")
+	if(firstName === "" || lastName === "" || login === "" || password === "" || repeatPassword === "")
 	{
 		result.innerHTML = "All fields are required.";
 		return;
