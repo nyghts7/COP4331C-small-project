@@ -190,6 +190,10 @@ function loadContacts(userId, query) {
   //const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
 
   const url = "https://poosdteam13.xyz/LAMPAPI/contacts.php"
+  
+  var tmp = {UserID:userId,query:query};
+	let jsonPayload = JSON.stringify( tmp );
+
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
   let response;
@@ -213,7 +217,9 @@ function loadContacts(userId, query) {
     }
   };
 
-  xhr.send();
+  xhr.send(jsonPayload);
+
+  console.log(response);
 }
 
 
