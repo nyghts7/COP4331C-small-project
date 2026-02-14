@@ -15,11 +15,25 @@ body {
     flex-direction: column;
 }
 
+/*
+    App
+*/
+
+#app {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 60px 1fr;
+    grid-template-areas:
+        "header icon"
+        "sidebar content";
+}
+
 /* 
- *  Add - Contact - Edit - Delete - Settings Bar
+ *  Icon bar
  */
 
-.settings-wrapper {
+.icon {
     grid-area: icon;
     display: flex;
     gap: 16px;
@@ -31,13 +45,17 @@ body {
 }
 
 .add-btn {
-    background: white;
+    background: lightgray;
     border: none;
     font-size: 22px;
     padding: 8px;
     cursor: pointer;
     border-radius: 50%;
 }
+
+    .add-btn:hover {
+        background-color: blue;
+    }
 
 .contact-btn {
     background: white;
@@ -48,17 +66,25 @@ body {
     border-radius: 50%;
 }
 
+    .contact-btn:hover {
+        background-color: blue;
+    }
+
 .edit-btn {
-    background: none;
+    background: gray;
     border: none;
     font-size: 22px;
     padding: 8px;
     cursor: pointer;
     border-radius: 50%;
 }
+
+    .edit-btn:hover {
+        background-color: #f1f3f4;
+    }
 
 .delete-btn {
-    background: none;
+    background: gray;
     border: none;
     font-size: 22px;
     padding: 8px;
@@ -66,34 +92,13 @@ body {
     border-radius: 50%;
 }
 
-/*
-    ???
-*/
-.tab-button {
-    padding: 10px 20px;
-    border: 1px solid transparent;
-    background: #eee;
-    cursor: pointer;
-    border-radius: 8px 8px 0 0; /* Rounds only the top corners */
-    transition: all 0.2s;
-}
-
-    /* The 'Active' state styling */
-    .tab-button.active {
-        background: white; /* Match the background of your content area */
-        border: 1px solid #eee; /* Match the border of your content area */
-        border-bottom: 2px solid white; /* Overlaps the content border to look joined */
-        margin-bottom: -1px; /* Pulls button down 1px to cover the content border */
-        font-weight: bold;
-        color: #007bff;
+    .delete-btn:hover {
+        background-color: #f1f3f4;
     }
-/* 
- *  Settings
- */
 
 .settings-btn {
     margin-left: auto;
-    background: none;
+    background: gray;
     border: none;
     font-size: 22px;
     padding: 8px;
@@ -101,64 +106,13 @@ body {
     border-radius: 50%;
 }
 
-.settings-btn:hover {
-    background-color: #f1f3f4;
-}
-
-.dropdown {
-    position: absolute;
-    top: 44px;
-    right: 0;
-    width: 180px;
-    background: #ffffff;
-    border: 1px solid #dadce0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: none;
-    z-index: 1000;
-}
-
-    .dropdown ul {
-        list-style: none;
-        margin: 0;
-        padding: 8px 0;
-    }
-
-    .dropdown li {
-        padding: 10px 16px;
-        font-size: 14px;
-    }
-
-        .dropdown li a {
-            text-decoration: none;
-            color: #202124;
-            display: block;
-        }
-
-        .dropdown li:hover {
-            background-color: #f1f3f4;
-        }
-
-    .dropdown .divider {
-        height: 1px;
-        background-color: #e0e0e0;
-        margin: 6px 0;
-        padding: 0;
+    .settings-btn:hover {
+        background-color: #f1f3f4;
     }
 
 /*
- *  App
+ *  Title + Contact Page
  */
-
-#app {
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-        "header content"
-        "sidebar content";
-}
 
 .title {
     grid-area: header;
@@ -166,13 +120,13 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: 48px;
-    margin-bottom: 48px;
+    margin-top: 24px;
+    margin-bottom: 24px;
     font-size: 22px;
     font-weight: 500;
 }
 
-.contact {
+.contact-list {
     flex: 1;
     flex-direction: column;
     min-height: 0;
@@ -186,15 +140,37 @@ body {
     z-index: 1;
 }
 
-.tab-pane {
+.pfp-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: fill;
+    display: flex;
+    justify-content: center;
+}
+
+.pfp-placeholder {
+    width: 80px;
+    height: 80px;
+    background-color: #ddd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.tab {
     display: none;
 }
 
-.tab-pane.active {
+.tab.active {
     display: block
 }
+
 /*
-    Contact List (Sidebar)
+    Sidebar
 */
 
 .sidebar {
@@ -206,63 +182,27 @@ body {
     margin-right: 4px;
     margin-bottom: 8px;
     padding: 8px;
-}
-
-#contact-list {
-    display: flex;
-    flex-direction: column;
-    max-height: calc(100vh - 150px);
-    overflow-y: auto;
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
-}
-
-#contact-list .select-item {
-    border-bottom: 1px solid #eee;
-    padding: 15px;
-    background: white;
-    transition: all 0.2s ease;
-}
-
-#contact-list .select-item:last-child {
-    border-bottom: none;
-}
-
-.selector-list {
-    flex-grow: 1;
-}
-
-.selector-list:empty:before {
-    content: "No contacts found.";
-    color: #888;
-    padding: 10px;
-}
-
-.contact-list {
-    grid-area: content;
     display: flex;
     flex-direction: column;
 }
 
 .search-container {
     position: relative;
-    margin-right: 12px;
     display: flex;
-    width: 100%;
-    gap: 0;
+    width: 224px;
+    gap: 0px;
 }
 
 .search-btn {
-    left: 10px;
     z-index: 1;
     background: none;
     border: none;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     padding: 8px;
     border-radius: 50%;
-    margin-left: auto;
+    margin-right: 32px;
+    margin-top: 4px;
 }
 
 .search-btn:hover {
@@ -273,20 +213,44 @@ body {
     flex-grow: 1;
     padding: 8px;
     border: 1px solid #dadce0;
-    border-right: none;
     border-radius: 24px;
-
-    box-sizing: border-box;
+    width: 168px;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-top: 4px;
     opacity: 0;
     outline: none;
     transition: width 0.25s ease, opacity 0.2s ease;
     font-size: 14px;
 }
 
-.search-input.active {
-    width: 220px;
-    opacity: 1;
+    .search-input.active {
+        width: 168px;
+        margin-right: 8px;
+        margin-top: 4px;
+        opacity: 1;
+    }
+
+#contact-search {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
 }
+
+    #contact-search .select-item {
+        border-bottom: 1px solid #eee;
+        padding: 15px;
+        background: white;
+        transition: all 0.2s ease;
+    }
+
+        #contact-search .select-item:last-child {
+            border-bottom: none;
+        }
 
 .search-results {
     position: absolute;
@@ -302,15 +266,48 @@ body {
     z-index: 1000;
 }
 
-.search-results div {
-    padding: 10px 16px;
-    font-size: 14px;
-    cursor: pointer;
+    .search-results div {
+        padding: 10px 16px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+        .search-results div:hover {
+            background-color: #f1f3f4;
+        }
+        /*
+            Watch below
+        */
+
+.selector-list {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
-.search-results div:hover {
-    background-color: #f1f3f4;
+    .selector-list:empty {
+        content: "No contacts found.";
+        color: #888;
+        padding: 10px;
+    }
+
+.selector-item {
+    width: 100%;
+    padding: 15px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
 }
+
+    .selector-item.active {
+        display: block;
+    }
 
 /* 
  * Footer
