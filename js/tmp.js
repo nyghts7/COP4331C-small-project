@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     let jsonPayload = JSON.stringify(payload)
 
-    let url = 'https://poosdteam13.xyz/contacts.php';
+    let url = 'https://poosdteam13.xyz/LAMPAPI/contacts.php';
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -282,7 +282,7 @@ function showContactDetails(contact){
   const info = document.createElement("p");
   info.innerHTML = `
     ${first} ${last}<br/>
-    ${phone}${email ? `- ${email}` : ""}`;
+    ${phone}${email ? ` - ${email}` : ""}`;
   
   //Append into the tab
   contactTab.appendChild(img);
