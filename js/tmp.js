@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-function loadContacts(userId, query) {
+function loadContacts(userId, query="") {
   //const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
 
   const url = `https://poosdteam13.xyz/LAMPAPI/contacts.php` + 
@@ -232,7 +232,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (this.readyState == 4 && this.status == 201) 
         {
           document.getElementById("addResult").innerHTML = "Contact Added."
-          
+          showTab("contact-contact");
+          loadContacts(userId, "");
+          showContactDetails(payload);
         } else if (xhr.status === 400){
           document.getElementById("addResult").innerHTML = "Failed to add contact.";
         } else if (xhr.status === 409){
@@ -248,8 +250,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Reset form
     form.reset();
-    
-    showTab("contact-contact");
   })
 });
 
