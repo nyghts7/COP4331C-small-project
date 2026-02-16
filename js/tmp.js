@@ -48,36 +48,15 @@ if (searchToggle && searchInput && searchResults) {
 
   /* Live search */
   searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase().trim();
+    const query = searchInput.value.trim();
     searchResults.innerHTML = "";
 
     if (!query) {
-      searchResults.style.display = "none";
+      loadContacts(userId, "");
       return;
     }
 
-    const matches = searchData.filter(item =>
-      item.toLowerCase().includes(query)
-    );
-
-    if (matches.length === 0) {
-      searchResults.style.display = "none";
-      return;
-    }
-
-    matches.forEach(match => {
-      const div = document.createElement("div");
-      div.textContent = match;
-
-      div.addEventListener("click", () => {
-        searchInput.value = match;
-        searchResults.style.display = "none";
-      });
-
-      searchResults.appendChild(div);
-    });
-
-    searchResults.style.display = "block";
+    loadContacts(userId, query);
   });
 }
 
@@ -137,7 +116,7 @@ function clearSearch() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const userId = getCookie("userId"); // use YOUR cookie name
+  userId = getCookie("userId"); // use YOUR cookie name
 
   if (!userId) {
     window.location.href = "index.html"; // or login page
@@ -152,7 +131,7 @@ function loadContacts(userId, query) {
   //const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
 
   const url = `https://poosdteam13.xyz/LAMPAPI/contacts.php` + 
-    `?UserID=${encodeURIComponent(userId)}` +
+    `?userID=${encodeURIComponent(userId)}` +
     `&query=${encodeURIComponent(query)}`;
   
   const xhr = new XMLHttpRequest();
