@@ -44,18 +44,26 @@
         </aside>
 
         <div class="icon">
-            <button class="add-btn" data-target="add-contact">😐</button>
-            <button class="contact-btn" data-target="contact-info">👤</button>
-            <button class="edit-btn" data-target="contact-edit">✏️</button>
-            <button class="delete-btn" data-target="delete-contact">✏️</button>
-            <button class="settings-btn" data-target="settings">⚙️</button>
+            <button type="button" class="add-btn" data-target="contact-add">😐 Add</button>
+            <button type="button" class="contact-btn" data-target="contact-contact">👤 View</button>
+            <button type="button" class="edit-btn" data-target="contact-edit">✏️ Edit</button>
+            <button type="button" class="delete-btn" data-target="contact-delete">❌ Delete</button>
+            <button type="button" class="settings-btn" data-target="settings-edits">⚙️ Settings</button>
         </div>
 
         <main class="contact-list">
             <div class="tab" id="contact-add">
                 <img class="pfp-picture" src="pfp.png" alt="User Profile" style="display: none;">
                 <div class="pfp-placeholder">JD</div>
-                <p id="edit-info">DATA1</p>
+                <h3>Add Contact</h3>
+                <form id="add-contact-form">
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                    <input type="text" id="lastName" placeholder="Last Name" required>
+                    <input type="text" id="phone" placeholder="Phone" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <button type="submit">Save Contact</button>
+                    <button type="button" id="add-cancel">Cancel</button>
+                </form>
             </div>
             <div class="tab active" id="contact-contact">
                 <img class="pfp-picture" src="pfp.png" alt="User Profile" style="display: none;">

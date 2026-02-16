@@ -31,18 +31,6 @@ const searchToggle = document.getElementById("searchToggle");
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
 
-/* Example data — replace with API later */
-const searchData = [
-  "Alice Johnson",
-  "Bob Smith",
-  "Charlie Brown",
-  "Diana Prince",
-  "Evan Miller",
-  "Fiona Davis",
-  "George Wilson",
-  "Hannah Lee"
-];
-
 if (searchToggle && searchInput && searchResults) {
 
   /* Toggle search input */
@@ -223,3 +211,63 @@ function getCookie(name) {
   }
   return "";
 }
+
+/* =========================
+   Add, Edit, Delete Buttons
+========================= */
+
+// What is the contact button supposed to do?
+// Actually starting an email or a call?
+
+const addButton = document.getElementById("add-btn");
+const formContainer = document.getElementById("add-form-container");
+const editButton = document.getElementById("edit-btn");
+const deleteButton = document.getElementById("delete-btn");
+
+addButton.addEventListener("click", () => {
+  showTab("contact-add");
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cancel = document.getElementById("add-cancel");
+  if (cancel) cancel.addEventListener("click", () => showTab("contact-contact"));
+
+  const form = document.getElementById("add-contact-form");
+  if (!form) return;
+  
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const payload = {
+      firstName: document.getElementById("firstName").value.trim(),
+      lastName: document.getElementById("lastName").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      email: document.getElementById("email").value.trim(),
+    };
+
+    //TO DO: CHECK PHP FILES FOR HOW TO SEND NEW CONTACT
+    //SEND PAYLOAD TO API VIA XHR
+
+    //Reset form
+    form.reset();
+    showTab("contact-contact");
+  })
+});
+
+
+function showTab(tabID){
+  document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+  const target = document.getElementById(tabID);
+
+  if (target) target.classList.add("active");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".icon")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-target]");
+    if (!btn) return;
+
+    e.preventDefault();
+    showTab(btn.dataset.target);
+  });
+});
