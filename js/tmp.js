@@ -3,7 +3,7 @@ console.log("contacts page JS loaded");
 let userId = 0;
 let lastName = "";
 let firstName = "";
-
+let selectedContact = null;
 
 
 /* =========================
@@ -151,7 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
 function loadContacts(userId, query) {
   //const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
 
-  const url = "https://poosdteam13.xyz/LAMPAPI/contacts.php"
+  const url = `https://poosdteam13.xyz/LAMPAPI/contacts.php` + 
+    `?UserID=${encodeURIComponent(userId)}` +
+    `&query=${encodeURIComponent(query)}`;
   
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
@@ -192,6 +194,7 @@ function renderContactsList(contacts) {
     btn.textContent = `${c.FirstName ?? ""} ${c.LastName ?? ""}`.trim() || "(No name)";
 
     btn.addEventListener("click", () => {
+      selectedContact = c;
       showContactDetails(c);
       showTab("contact-contact");
     });
@@ -247,10 +250,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       xhr.onreadystatechange = function() 
       {
-        if (this.readyState == 4 && this.status == 200) 
+        if (this.readyState == 4 && this.status == 201) 
         {
-          let jsonObject = JSON.parse( xhr.responseText );
-          userId = jsonObject.ID;
+          document.getElementById("addResult").innerHTML = "Contact Added."
           
         } else if (xhr.status === 400){
           document.getElementById("addResult").innerHTML = "Failed to add contact.";
@@ -267,15 +269,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Reset form
     form.reset();
+    
     showTab("contact-contact");
   })
 });
 
 function showContactDetails(contact){
   let contactTab = document.getElementById("contact-contact");
+  if (!contactTab) return;
+  
+  //Clear current content
   contactTab.innerHTML = "";
 
-  contactTab.createElement("img")
+  const first = contact.FirstName ?? "";
+  const last = contact.LastName ?? "";
+  const phone = contact.PhoneNumber ?? "";
+  const email = contact.Email ?? "";
+
+  const initials = `${first.charAt(0)}${last.charAt(0)}`.toUpperCase() || "??";
+
+  //Create Profile picture area
+  const img = document.createElement("img");
+  img.className = "pfp-picture";
+  img.src = "pfp.png";
+  img.alt = "User Profile";
+  img.style.display = "none;"
+  //Fill it with initials
+  const imgDiv = document.createElement("div");
+  imgDiv.className = "pfp-placeholder";
+  imgDiv.textContent = initials;
+  
+  //Display contact info
+  const info = document.createElement("p");
+  info.innerHTML = `
+    ${first} ${last}<br/>
+    ${phone}${email ? `- ${email}` : ""}`;
+  
+  //Append into the tab
+  contactTab.appendChild(img);
+  contactTab.appendChild(imgDiv);
+  contactTab.appendChild(info);
 }
 
 
