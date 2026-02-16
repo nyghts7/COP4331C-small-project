@@ -181,9 +181,6 @@ function loadContacts(userId, query) {
   };
 
   xhr.send(jsonPayload);
-
-  console.log(contacts[0]);
-  console.log(contacts[1]);
 }
 
 
@@ -216,9 +213,6 @@ function getCookie(name) {
    Add, Edit, Delete Buttons
 ========================= */
 
-// What is the contact button supposed to do?
-// Actually starting an email or a call?
-
 const addButton = document.getElementById("add-btn");
 const formContainer = document.getElementById("add-form-container");
 const editButton = document.getElementById("edit-btn");
@@ -244,9 +238,34 @@ document.addEventListener("DOMContentLoaded", () => {
       phone: document.getElementById("phone").value.trim(),
       email: document.getElementById("email").value.trim(),
     };
+    let jsonPayload = JSON.stringify(payload)
 
-    //TO DO: CHECK PHP FILES FOR HOW TO SEND NEW CONTACT
-    //SEND PAYLOAD TO API VIA XHR
+    let url = urlBase + '/contacts.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try
+    {
+      xhr.onreadystatechange = function() 
+      {
+        if (this.readyState == 4 && this.status == 200) 
+        {
+          let jsonObject = JSON.parse( xhr.responseText );
+          userId = jsonObject.ID;
+          
+        } else if (xhr.status === 400){
+          document.getElementById("addResult").innerHTML = "Failed to add contact.";
+        } else if (xhr.status === 409){
+          document.getElementById("addResult").innerHTML = "A contact with this information already exists.";
+        }
+      };
+      xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+      document.getElementById("addResult").innerHTML = err.message;
+    }
 
     //Reset form
     form.reset();

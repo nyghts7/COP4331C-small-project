@@ -44,11 +44,11 @@
         </aside>
 
         <div class="icon">
-            <button type="button" class="add-btn" data-target="contact-add">😐 Add</button>
-            <button type="button" class="contact-btn" data-target="contact-contact">👤 View</button>
-            <button type="button" class="edit-btn" data-target="contact-edit">✏️ Edit</button>
-            <button type="button" class="delete-btn" data-target="contact-delete">❌ Delete</button>
-            <button type="button" class="settings-btn" data-target="settings-edits">⚙️ Settings</button>
+            <button type="button" id="add-btn" class="add-btn" data-target="contact-add">😐 Add</button>
+            <button type="button" id="contact-btn" class="contact-btn" data-target="contact-contact">👤 View</button>
+            <button type="button" id="edit-btn" class="edit-btn" data-target="contact-edit">✏️ Edit</button>
+            <button type="button" id="delete-btn" class="delete-btn" data-target="contact-delete">❌ Delete</button>
+            <button type="button" id="settings-btn" class="settings-btn" data-target="settings-edit">⚙️ Settings</button>
         </div>
 
         <main class="contact-list">
@@ -63,6 +63,7 @@
                     <input type="email" id="email" placeholder="Email" required>
                     <button type="submit">Save Contact</button>
                     <button type="button" id="add-cancel">Cancel</button>
+                    <span id="addResult" class="text-danger fw-bold"></span>
                 </form>
             </div>
             <div class="tab active" id="contact-contact">
