@@ -153,19 +153,14 @@ function loadContacts(userId, query) {
 
   const url = "https://poosdteam13.xyz/LAMPAPI/contacts.php"
   
-  var tmp = {UserID:userId,query:query};
-	let jsonPayload = JSON.stringify( tmp );
-
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
-  let response;
-  let contacts;
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState !== 4) return;
 
     if (xhr.status === 200) {
-      
+      let response;
       try {
         response = JSON.parse(xhr.responseText);
       } catch (e) {
@@ -173,14 +168,14 @@ function loadContacts(userId, query) {
         return;
       }
 
-      contacts = Array.isArray(response) ? response : (response.data || []);
+      const contacts = Array.isArray(response) ? response : [];
       renderContactsList(contacts);
     } else {
       console.error("Failed to load contacts:", xhr.status, xhr.responseText);
     }
   };
 
-  xhr.send(jsonPayload);
+  xhr.send(null);
 }
 
 
@@ -193,8 +188,13 @@ function renderContactsList(contacts) {
   contacts.forEach((c) => {
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "contact-item";
-    btn.textContent = `${c.FirstName ?? c.firstName ?? ""} ${c.LastName ?? c.lastName ?? ""}`.trim();
+    btn.className = "selector-item";
+    btn.textContent = `${c.FirstName ?? ""} ${c.LastName ?? ""}`.trim() || "(No name)";
+
+    btn.addEventListener("click", () => {
+      showContactDetails(c);
+      showTab("contact-contact");
+    });
 
     list.appendChild(btn);
   });
@@ -210,7 +210,7 @@ function getCookie(name) {
 }
 
 /* =========================
-   Add, Edit, Delete Buttons
+   Add, View (Contact), Edit, Delete Buttons
 ========================= */
 
 const addButton = document.getElementById("add-btn");
@@ -218,10 +218,7 @@ const formContainer = document.getElementById("add-form-container");
 const editButton = document.getElementById("edit-btn");
 const deleteButton = document.getElementById("delete-btn");
 
-addButton.addEventListener("click", () => {
-  showTab("contact-add");
-});
-
+// Add contact
 document.addEventListener("DOMContentLoaded", () => {
   const cancel = document.getElementById("add-cancel");
   if (cancel) cancel.addEventListener("click", () => showTab("contact-contact"));
@@ -233,17 +230,18 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     const payload = {
-      firstName: document.getElementById("firstName").value.trim(),
-      lastName: document.getElementById("lastName").value.trim(),
-      phone: document.getElementById("phone").value.trim(),
-      email: document.getElementById("email").value.trim(),
+      UserID: userId,
+      FirstName: document.getElementById("firstName").value.trim(),
+      LastName: document.getElementById("lastName").value.trim(),
+      Email: document.getElementById("email").value.trim(),
+      PhoneNumber: document.getElementById("phone").value.trim(),
     };
     let jsonPayload = JSON.stringify(payload)
 
-    let url = urlBase + '/contacts.' + extension;
+    let url = 'https://poosdteam13.xyz/contacts.php';
 
     let xhr = new XMLHttpRequest();
-    xhr.open("PUT", url, true);
+    xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try
     {
@@ -272,6 +270,13 @@ document.addEventListener("DOMContentLoaded", () => {
     showTab("contact-contact");
   })
 });
+
+function showContactDetails(contact){
+  let contactTab = document.getElementById("contact-contact");
+  contactTab.innerHTML = "";
+
+  contactTab.createElement("img")
+}
 
 
 function showTab(tabID){
