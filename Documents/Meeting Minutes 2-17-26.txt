@@ -1,0 +1,18 @@
+Meeting Minutes 2-17-26
+
+Present: Aviel, Fabian, Manny, Tim, Luciano
+
+Notes:
+	Manny made most of the powerpoint slides
+	Need to fill in details in slides
+	Went over Rubric: 
+		* Need to make Use Case Diagram
+		* Waiting on prof about Luna
+Currently working on:
+	Fabian working on Log Out
+	Aviel working on pages for scalability
+	Manny will work on Use Case Diagram
+	Everyone: make notes of what you want to include in slides and either add them or post them to chat
+
+
+Next Meeting: 2/19/26 8pm to review before submission
