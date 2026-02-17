@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="assets/css/css/Search-Input-Responsive-with-Icon.css">
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/tmp.js" defer></script>
+    <script type="text/javascript" src="js/contacts.js" defer></script>
     <link href="assets/css/styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
@@ -47,7 +47,7 @@
             <button type="button" id="add-btn" class="add-btn" data-target="contact-add">😐 Add</button>
             <button type="button" id="contact-btn" class="contact-btn" data-target="contact-contact">👤 View</button>
             <button type="button" id="edit-btn" class="edit-btn" data-target="contact-edit">✏️ Edit</button>
-            <button type="button" id="delete-btn" class="delete-btn" data-target="contact-delete">❌ Delete</button>
+            <button type="button" id="delete-btn" class="delete-btn" data-target="contact-contact">❌ Delete</button>
             <button type="button" id="settings-btn" class="settings-btn" data-target="settings-edit">⚙️ Settings</button>
         </div>
 
@@ -57,27 +57,59 @@
                 <div class="pfp-placeholder">JD</div>
                 <h3>Add Contact</h3>
                 <form id="add-contact-form">
-                    <input type="text" id="firstName" placeholder="First Name" required>
-                    <input type="text" id="lastName" placeholder="Last Name" required>
-                    <input type="text" id="phone" placeholder="Phone" required>
-                    <input type="email" id="email" placeholder="Email" required>
-                    <button type="submit">Save Contact</button>
+                    <input type="text" id="add-firstName" placeholder="First Name" required>
+                    <input type="text" id="add-lastName" placeholder="Last Name" required>
+                    <input type="text" id="add-phone" placeholder="Phone" required>
+                    <input type="email" id="add-email" placeholder="Email" required>
+                    <button type="submit" id="add-save">Save Contact</button>
                     <button type="button" id="add-cancel">Cancel</button>
+                    <br />
                     <span id="addResult" class="text-danger fw-bold"></span>
                 </form>
             </div>
             <div class="tab active" id="contact-contact">
-                <img class="pfp-picture" src="pfp.png" alt="User Profile" style="display: none;">
-                <div class="pfp-placeholder">JD</div>
-                <p>John - Doe<br />(123)-456-7890 - johndoe@example.com<br />Created Today@Now</p>
+                <div id="contact-details"></div>
+                
+                <div id="contact-actions" class="mt-3">
+                    <div id="delete-modal" class="d-none">
+                        <div class="modal-backdrop show"></div>
+                        <div class="modal d-block" tabindex="-1">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Delete contact?</h5>
+                                    <button type="button" class="btn-close" id="delete-cancel-x"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="mb-1">Are you sure you want to delete:</p>
+                                    <div id="delete-preview" class="p-2 border rounded"></div>
+                                    <div id="deleteResults" class="text-danger fw-bold mt-2"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" id="delete-cancel">Cancel</button>
+                                    <button class="btn btn-danger" id="delete-confirm">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="tab" id="contact-edit">
                 <img class="pfp-picture" src="pfp.png" alt="User Profile" style="display: none;">
                 <div class="pfp-placeholder">JD</div>
-                <p>DATA3</p>
+                <h3>Edit Contact</h3>
+                <form id="edit-contact-form">
+                    <input type="text" id="edit-firstName" placeholder="First Name" required>
+                    <input type="text" id="edit-lastName" placeholder="Last Name" required>
+                    <input type="text" id="edit-phone" placeholder="Phone" required>
+                    <input type="email" id="edit-email" placeholder="Email" required>
+                    <button type="submit" id="edit-save">Save Changes</button>
+                    <button type="button" id="edit-cancel">Cancel</button>
+                    <br />
+                    <span id="editResult" class="text-danger fw-bold"></span>
+                </form>
             </div>
             <div class="tab" id="contact-delete">
-                <p>DATA4</p>
             </div>
             <div class="tab" id="settings-edit">
                 <p>DATA5</p>

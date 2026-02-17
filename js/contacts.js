@@ -169,6 +169,7 @@ function renderContactsList(contacts) {
   contacts.forEach((c) => {
     const btn = document.createElement("button");
     btn.type = "button";
+    btn.id = `${c.ID}`;
     btn.className = "selector-item";
     btn.textContent = `${c.FirstName ?? ""} ${c.LastName ?? ""}`.trim() || "(No name)";
 
@@ -194,11 +195,18 @@ function getCookie(name) {
 /* =========================
    Add, View (Contact), Edit, Delete Buttons
 ========================= */
+document.addEventListener("DOMContentLoaded", () => {
 
+  const deleteButton = document.getElementById("delete-btn");
+  deleteButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    openDeleteModal();
+  });
+});
 const addButton = document.getElementById("add-btn");
 const formContainer = document.getElementById("add-form-container");
 const editButton = document.getElementById("edit-btn");
-const deleteButton = document.getElementById("delete-btn");
+
 
 // Add contact
 document.addEventListener("DOMContentLoaded", () => {
@@ -213,10 +221,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const payload = {
       UserID: userId,
-      FirstName: document.getElementById("firstName").value.trim(),
-      LastName: document.getElementById("lastName").value.trim(),
-      Email: document.getElementById("email").value.trim(),
-      PhoneNumber: document.getElementById("phone").value.trim(),
+      FirstName: document.getElementById("add-firstName").value.trim(),
+      LastName: document.getElementById("add-lastName").value.trim(),
+      Email: document.getElementById("add-email").value.trim(),
+      PhoneNumber: document.getElementById("add-phone").value.trim(),
     };
     let jsonPayload = JSON.stringify(payload)
 
@@ -232,9 +240,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (this.readyState == 4 && this.status == 201) 
         {
           document.getElementById("addResult").innerHTML = "Contact Added."
+          let newContact = JSON.parse(xhr.responseText);
+
           showTab("contact-contact");
-          loadContacts(userId, "");
-          showContactDetails(payload);
+          showContactDetails(newContact.ID);
         } else if (xhr.status === 400){
           document.getElementById("addResult").innerHTML = "Failed to add contact.";
         } else if (xhr.status === 409){
@@ -253,12 +262,149 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 });
 
-function showContactDetails(contact){
-  let contactTab = document.getElementById("contact-contact");
-  if (!contactTab) return;
+// Edit Contact
+document.addEventListener("DOMContentLoaded", () => {
+  const editBtn = document.getElementById("edit-btn");
+  if (!editBtn) return;
+
+  editBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openEditContact();
+  })
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cancel = document.getElementById("edit-cancel");
+  if (cancel) cancel.addEventListener("click", () => showTab("contact-contact"));
+
+  const form = document.getElementById("edit-contact-form");
+  if (!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const payload = {
+      UserID: userId,
+      ID: selectedContact.ID,
+      FirstName: document.getElementById("edit-firstName").value.trim(),
+      LastName: document.getElementById("edit-lastName").value.trim(),
+      Email: document.getElementById("edit-email").value.trim(),
+      PhoneNumber: document.getElementById("edit-phone").value.trim(),
+    };
+    let jsonPayload = JSON.stringify(payload)
+
+    let url = 'https://poosdteam13.xyz/LAMPAPI/contacts.php';
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try
+    {
+      xhr.onreadystatechange = function() 
+      {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("editResult").innerHTML = "Contact Updated."
+          const newContact = JSON.parse(xhr.responseText);
+
+          selectedContact = newContact;
+          showTab("contact-contact");
+          showContactDetails(newContact);
+          loadContacts(userId, "");
+        } else if (xhr.status === 404){
+          document.getElementById("editResult").innerHTML = "Failed to update contact.";
+        }
+      };
+      xhr.send(jsonPayload);
+    }
+    catch(err)
+    {
+      document.getElementById("editResult").innerHTML = err.message;
+    }
+
+    //Reset form
+    form.reset();
+  })
+});
+
+function openEditContact(){
+  if (!selectedContact || !selectedContact.ID) return;
+
+  document.getElementById("edit-firstName").value = selectedContact.FirstName || "";
+  document.getElementById("edit-lastName").value  = selectedContact.LastName || "";
+  document.getElementById("edit-email").value     = selectedContact.Email || "";
+  document.getElementById("edit-phone").value     = selectedContact.PhoneNumber || "";
+
+  const msg = document.getElementById("editResult");
+  if (msg) msg.textContent = "";
+
+  showTab("contact-edit")
+}
+
+// Delete Contact
+function openDeleteModal(){
+  if (!selectedContact || !selectedContact.ID) return;
+
+  showTab("contact-contact");
+
+  document.getElementById("delete-preview").innerHTML = `
+    <div><strong>${selectedContact.FirstName || ""} ${selectedContact.LastName || ""}</strong></div>
+    <div>${selectedContact.PhoneNumber || ""}</div>
+    <div>${selectedContact.Email || ""}</div>
+    `;
   
-  //Clear current content
-  contactTab.innerHTML = "";
+  document.getElementById("deleteResults").textContent = "";
+
+  document.getElementById("delete-modal").classList.remove("d-none");
+}
+
+function closeDeleteModal(){
+  document.getElementById("delete-modal").classList.add("d-none");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("delete-cancel")?.addEventListener("click", closeDeleteModal);
+  document.getElementById("delete-cancel-x")?.addEventListener("click", closeDeleteModal);
+
+  document.getElementById("delete-confirm")?.addEventListener("click", () => {
+    if (!selectedContact || !selectedContact.ID) return;
+
+    const url = `https://poosdteam13.xyz/LAMPAPI/contacts.php` +
+      `?userID=${encodeURIComponent(userId)}` +
+      `&ID=${encodeURIComponent(selectedContact.ID)}`;
+
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("DELETE", url, true);
+
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState !== 4) return;
+
+        if (xhr.status === 200) {
+          closeDeleteModal();
+          selectedContact = null;
+
+          showTab("contact-contact");
+          document.getElementById("contact-details").replaceChildren();
+          loadContacts(userId, "");
+        } else {
+          document.getElementById("deleteResults").textContent = "Failed to delete contact.";
+          console.error("DELETE failed:", xhr.status, xhr.responseText);
+        }
+      };
+      xhr.send(null);
+  });
+});
+
+function showContactDetails(contact){
+  console.log("showContactDetails contact:", contact);
+  selectedContact = contact;
+
+  let details = document.getElementById("contact-details");
+  console.log("contact-details element:", details);
+  if (!details) return;
+
+  details.innerHTML = "";
 
   const first = contact.FirstName ?? "";
   const last = contact.LastName ?? "";
@@ -272,7 +418,7 @@ function showContactDetails(contact){
   img.className = "pfp-picture";
   img.src = "pfp.png";
   img.alt = "User Profile";
-  img.style.display = "none;"
+  img.style.display = "none";
   //Fill it with initials
   const imgDiv = document.createElement("div");
   imgDiv.className = "pfp-placeholder";
@@ -285,9 +431,9 @@ function showContactDetails(contact){
     ${phone}${email ? ` - ${email}` : ""}`;
   
   //Append into the tab
-  contactTab.appendChild(img);
-  contactTab.appendChild(imgDiv);
-  contactTab.appendChild(info);
+  details.appendChild(img);
+  details.appendChild(imgDiv);
+  details.appendChild(info);
 }
 
 

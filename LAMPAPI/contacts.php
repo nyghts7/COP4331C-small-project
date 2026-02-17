@@ -7,14 +7,14 @@ switch ($method) {
         $userID = $_GET['userID'] ?? null;
         $query = $_GET['query'] ?? ''; // Search string
 
-		// Create the partial search string
-		$searchTerm = "%" . $query . "%";
+        // Create the partial search string
+        $searchTerm = "%" . $query . "%";
 
-		// SQL: Must belong to user AND (match first name OR match last name)
-		$stmt = $conn->prepare("SELECT * FROM Contacts WHERE UserID = ? AND (FirstName LIKE ? OR LastName LIKE ?)");
-		
-		// Bind: 'i' for the UserID, 's' for both name placeholders
-		$stmt->bind_param("iss", $userID, $searchTerm, $searchTerm);
+        // SQL: Must belong to user AND (match first name OR match last name)
+        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE UserID = ? AND (FirstName LIKE ? OR LastName LIKE ?)");
+        
+        // Bind: 'i' for the UserID, 's' for both name placeholders
+        $stmt->bind_param("iss", $userID, $searchTerm, $searchTerm);
 		
 		$stmt->execute();
 		sendResponse($stmt->get_result()->fetch_all(MYSQLI_ASSOC));
@@ -46,7 +46,16 @@ switch ($method) {
         $stmt = $conn->prepare("UPDATE Contacts SET FirstName=?, LastName=?, Email=?, PhoneNumber=?, Address=? WHERE ID=?");
         $stmt->bind_param("sssssi", $data['FirstName'], $data['LastName'], $data['Email'], $data['PhoneNumber'], $data['Address'], $data['ID']);
         
-        $stmt->execute() ? sendResponse($data) : sendResponse(["error" => "Update failed"], 400);
+        //This returns true even if no rows were updated
+        $stmt->execute();
+        
+        //This will give a positive reply only if a row was updated
+        if ($stmt->affected_rows > 0){
+            sendResponse($data);
+        } else {
+            sendResponse(["error" => "No contact updated"], 400);
+        }
+        
         break;
 
     case 'DELETE':
