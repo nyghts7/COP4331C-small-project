@@ -243,7 +243,8 @@ document.addEventListener("DOMContentLoaded", () => {
           let newContact = JSON.parse(xhr.responseText);
 
           showTab("contact-contact");
-          showContactDetails(newContact.ID);
+          showContactDetails(newContact);
+          loadContacts(userId, "");
         } else if (xhr.status === 400){
           document.getElementById("addResult").innerHTML = "Failed to add contact.";
         } else if (xhr.status === 409){
