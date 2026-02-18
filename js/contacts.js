@@ -89,16 +89,10 @@ function clearSearch() {
    Add Contact
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
-
-  const deleteButton = document.getElementById("delete-btn");
-  deleteButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    openDeleteModal();
-  });
+  const addButton = document.getElementById("add-btn");
+  const formContainer = document.getElementById("add-form-container");
+  const editButton = document.getElementById("edit-btn");
 });
-const addButton = document.getElementById("add-btn");
-const formContainer = document.getElementById("add-form-container");
-const editButton = document.getElementById("edit-btn");
 
 
 
@@ -112,12 +106,24 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const givenEmail = document.getElementById("add-email").value.trim();
+    const givenPhone = document.getElementById("add-phone").value.trim();
+    if (!isValidEmail(givenEmail)){
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    if (!isValidPhone(givenPhone)){
+      alert("Phone number must contain at least 10 digits.");
+      return;
+    }
+
     const payload = {
       UserID: userId,
       FirstName: document.getElementById("add-firstName").value.trim(),
       LastName: document.getElementById("add-lastName").value.trim(),
-      Email: document.getElementById("add-email").value.trim(),
-      PhoneNumber: document.getElementById("add-phone").value.trim(),
+      Email: givenEmail,
+      PhoneNumber: givenPhone,
       Address: document.getElementById("add-address").value.trim(),
     };
     let jsonPayload = JSON.stringify(payload)
@@ -139,6 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
           showTab("contact-contact");
           showContactDetails(newContact);
           loadContacts(userId, "");
+          //Reset form
+          form.reset();
         } else if (xhr.status === 400){
           document.getElementById("addResult").innerHTML = "Failed to add contact.";
         } else if (xhr.status === 409){
@@ -152,10 +160,20 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("addResult").innerHTML = err.message;
     }
 
-    //Reset form
-    form.reset();
   })
 });
+
+function isValidEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  return re.test(email);
+}
+
+function isValidPhone(phone) {
+  const cleaned = phone.replace(/\D/g, "");
+  return cleaned.length >= 10;
+}
+
+
 
 /* =========================
    Edit Contact
@@ -211,6 +229,8 @@ document.addEventListener("DOMContentLoaded", () => {
           showTab("contact-contact");
           showContactDetails(newContact);
           loadContacts(userId, "");
+          //Reset form
+          form.reset();
         } else if (xhr.status === 404){
           document.getElementById("editResult").innerHTML = "Failed to update contact.";
         }
@@ -222,8 +242,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("editResult").innerHTML = err.message;
     }
 
-    //Reset form
-    form.reset();
   })
 });
 
@@ -245,6 +263,15 @@ function openEditContact(){
 /* =========================
    Delete Contact
 ========================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const deleteButton = document.getElementById("delete-btn");
+  if (deleteButton){
+    deleteButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      openDeleteModal();
+    });
+  }
+});
 
 function openDeleteModal(){
   if (!selectedContact || !selectedContact.ID) return;
