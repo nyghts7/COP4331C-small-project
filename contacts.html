@@ -28,7 +28,7 @@
                        placeholder="Search names..."
                        autocomplete="off" />
 
-                <button id="searchToggle" class="search-btn">🔍</button>
+                <button id="searchClear" class="search-clear hidden">×</button>
                 <div id="searchResults" class="search-results"></div>
             </div>
             <nav id="contact-list" class="selector-list"></nav>
@@ -44,7 +44,7 @@
             <button type="button" id="contact-btn" class="contact-btn" data-target="contact-contact">👤 View</button>
             <button type="button" id="edit-btn" class="edit-btn" data-target="contact-edit">✏️ Edit</button>
             <button type="button" id="delete-btn" class="delete-btn" data-target="contact-contact">❌ Delete</button>
-            <button type="button" id="settings-btn" class="settings-btn" data-target="settings-edit">⚙️ Settings</button>
+            <button type="button" id="signout-btn" class="settings-btn" data-target="settings-edit">🚪 Sign Out</button>
         </div>
 
         <main class="contact-list">
@@ -106,9 +106,6 @@
                 </form>
             </div>
             <div class="tab" id="contact-delete">
-            </div>
-            <div class="tab" id="settings-edit">
-                <p>DATA5</p>
             </div>
         </main>
     </div>

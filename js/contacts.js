@@ -30,38 +30,37 @@ if (settingsBtn && settingsMenu) {
    SEARCH BAR (EXPAND + LIVE)
 ========================= */
 
-const searchToggle = document.getElementById("searchToggle");
-const searchInput = document.getElementById("searchInput");
-const searchResults = document.getElementById("searchResults");
+document.addEventListener("DOMContentLoaded", () => {
+  const searchClear = document.getElementById("searchClear");
+  const searchInput = document.getElementById("searchInput");
+  const searchResults = document.getElementById("searchResults");
 
-if (searchToggle && searchInput && searchResults) {
+  if (searchInput && searchResults && searchClear) {
 
-  /* Toggle search input */
-  searchToggle.addEventListener("click", (e) => {
-    e.stopPropagation();
+    /* Live search */
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim();
+      searchClear.classList.toggle("hidden", query.length === 0);
+      searchResults.innerHTML = "";
 
-    searchInput.classList.toggle("active");
+      if (!query) {
+        loadContacts(userId, "", 1);
+        return;
+      }
 
-    if (searchInput.classList.contains("active")) {
-      searchInput.focus();
-    } else {
-      clearSearch();
-    }
+      loadContacts(userId, query, 1);
+    });
+
+    searchClear.addEventListener("click", () => {
+    searchInput.value = "";
+    searchClear.classList.add("hidden");
+    loadContacts(userId, "", 1);
+    searchInput.focus;
   });
 
-  /* Live search */
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.trim();
-    searchResults.innerHTML = "";
+  }
+});
 
-    if (!query) {
-      loadContacts(userId, "", 1);
-      return;
-    }
-
-    loadContacts(userId, query, 1);
-  });
-}
 
 /* =========================
    GLOBAL CLICK HANDLING
@@ -69,40 +68,12 @@ if (searchToggle && searchInput && searchResults) {
 
 document.addEventListener("click", (e) => {
 
-  /* Close settings dropdown */
-  if (settingsMenu && !e.target.closest(".settings-wrapper")) {
-    settingsMenu.style.display = "none";
-    if (settingsBtn) {
-      settingsBtn.setAttribute("aria-expanded", "false");
-    }
-  }
-
   /* Close search results */
   if (searchResults && !e.target.closest(".search-container")) {
     searchResults.style.display = "none";
   }
 });
 
-/* =========================
-   ESC KEY HANDLING
-========================= */
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-
-    if (settingsMenu) {
-      settingsMenu.style.display = "none";
-      if (settingsBtn) {
-        settingsBtn.setAttribute("aria-expanded", "false");
-      }
-    }
-
-    if (searchInput) {
-      searchInput.classList.remove("active");
-      clearSearch();
-    }
-  }
-});
 
 /* =========================
    HELPERS
@@ -111,10 +82,11 @@ document.addEventListener("keydown", (e) => {
 function clearSearch() {
   if (searchInput) searchInput.value = "";
   if (searchResults) searchResults.style.display = "none";
+  loadContacts(userId, "");
 }
 
 /* =========================
-   Add, View (Contact), Edit, Delete Buttons
+   Add Contact
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -129,7 +101,7 @@ const formContainer = document.getElementById("add-form-container");
 const editButton = document.getElementById("edit-btn");
 
 
-// Add contact
+
 document.addEventListener("DOMContentLoaded", () => {
   const cancel = document.getElementById("add-cancel");
   if (cancel) cancel.addEventListener("click", () => showTab("contact-contact"));
@@ -184,7 +156,11 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 });
 
-// Edit Contact
+/* =========================
+   Edit Contact
+========================= */
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const editBtn = document.getElementById("edit-btn");
   if (!editBtn) return;
@@ -263,7 +239,10 @@ function openEditContact(){
   showTab("contact-edit")
 }
 
-// Delete Contact
+/* =========================
+   Delete Contact
+========================= */
+
 function openDeleteModal(){
   if (!selectedContact || !selectedContact.ID) return;
 
@@ -317,6 +296,10 @@ document.addEventListener("DOMContentLoaded", () => {
       xhr.send(null);
   });
 });
+
+/* =========================
+   View Contact
+========================= */
 
 function showContactDetails(contact){
   console.log("showContactDetails contact:", contact);
@@ -526,3 +509,24 @@ function getCookie(name) {
   }
   return "";
 }
+
+/* =========================
+   Sign Out
+========================= */
+
+function deleteCookie(name) {
+  // expire on same path
+  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const signOutBtn = document.getElementById("signout-btn");
+  if (signOutBtn) {
+    signOutBtn.addEventListener("click", () => {
+      deleteCookie("userId");   // <-- use your real cookie name
+      // deleteCookie("firstName"); // if you store these too
+      // deleteCookie("lastName");
+      window.location.href = "index.html"; // or your login page
+    });
+  }
+});

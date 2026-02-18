@@ -201,34 +201,19 @@ body {
     gap: 0px;
 }
 
-.search-btn {
-    z-index: 1;
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    margin-right: 32px;
-    margin-top: 4px;
-}
-
-.search-btn:hover {
-    background-color: #f1f3f4;
-}
-
 .search-input {
     flex-grow: 1;
-    padding: 8px;
+    padding: 8px 32px 8px 12px;
+    font-size: 14px;
     border: 1px solid #dadce0;
     border-radius: 24px;
     width: 168px;
     cursor: pointer;
     margin-right: 8px;
     margin-top: 4px;
-    opacity: 0;
+    opacity: 1;
     outline: none;
-    transition: width 0.25s ease, opacity 0.2s ease;
+    transition: none;
     font-size: 14px;
 }
 
@@ -237,6 +222,26 @@ body {
         margin-right: 8px;
         margin-top: 4px;
         opacity: 1;
+    }
+
+.search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #999;
+}
+
+    .search-clear:hover {
+        color: #333;
+    }
+
+    .hidden {
+        display: none !important;
     }
 
 #pager {
