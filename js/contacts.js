@@ -4,6 +4,9 @@ let userId = 0;
 let lastName = "";
 let firstName = "";
 let selectedContact = null;
+let currentPage = 1;
+const pageSize = 50;
+let currentQuery = "";
 
 
 /* =========================
@@ -52,11 +55,11 @@ if (searchToggle && searchInput && searchResults) {
     searchResults.innerHTML = "";
 
     if (!query) {
-      loadContacts(userId, "");
+      loadContacts(userId, "", 1);
       return;
     }
 
-    loadContacts(userId, query);
+    loadContacts(userId, query, 1);
   });
 }
 
@@ -108,88 +111,6 @@ document.addEventListener("keydown", (e) => {
 function clearSearch() {
   if (searchInput) searchInput.value = "";
   if (searchResults) searchResults.style.display = "none";
-}
-
-/* =========================
-   Load Contacts
-========================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  userId = getCookie("userId"); // use YOUR cookie name
-
-  if (!userId) {
-    window.location.href = "index.html"; // or login page
-    return;
-  }
-
-  loadContacts(userId, "");
-
-});
-
-function loadContacts(userId, query="") {
-  //const url = `contacts.php?userID=${encodeURIComponent(userId)}&query=${encodeURIComponent(query)}`;
-
-  const url = `https://poosdteam13.xyz/LAMPAPI/contacts.php` + 
-    `?userID=${encodeURIComponent(userId)}` +
-    `&query=${encodeURIComponent(query)}`;
-  
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", url, true);
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState !== 4) return;
-
-    if (xhr.status === 200) {
-      let response;
-      try {
-        response = JSON.parse(xhr.responseText);
-      } catch (e) {
-        console.error("Bad JSON from contacts.php:", xhr.responseText);
-        return;
-      }
-
-      const contacts = Array.isArray(response) ? response : [];
-      renderContactsList(contacts);
-    } else {
-      console.error("Failed to load contacts:", xhr.status, xhr.responseText);
-    }
-  };
-
-  xhr.send(null);
-}
-
-
-function renderContactsList(contacts) {
-  const list = document.getElementById("contact-list");
-  if (!list) return;
-
-  list.innerHTML = "";
-
-  contacts.forEach((c) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.id = `${c.ID}`;
-    btn.className = "selector-item";
-    btn.textContent = `${c.FirstName ?? ""} ${c.LastName ?? ""}`.trim() || "(No name)";
-
-    btn.addEventListener("click", () => {
-      selectedContact = c;
-      showContactDetails(c);
-      showTab("contact-contact");
-    });
-
-    list.appendChild(btn);
-  });
-}
-
-// Basic cookie helper
-function getCookie(name) {
-  const parts = document.cookie.split(",").map(p => p.trim());
-  for (const part of parts) {
-    if (part.startsWith(name + "=")) return decodeURIComponent(part.substring(name.length + 1));
-  }
-  return "";
 }
 
 /* =========================
@@ -454,3 +375,154 @@ document.addEventListener("DOMContentLoaded", () => {
     showTab(btn.dataset.target);
   });
 });
+
+/* =========================
+   Load Contacts
+========================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  userId = getCookie("userId"); // use YOUR cookie name
+
+  if (!userId) {
+    window.location.href = "index.html"; // or login page
+    return;
+  }
+
+  loadContacts(userId, "");
+
+});
+
+document.getElementById("prevPage").addEventListener("click", function(){
+  if (currentPage > 1) {
+    loadContacts(userId, currentQuery, currentPage - 1);
+  }
+});
+
+document.getElementById("nextPage").addEventListener("click", function(){
+  loadContacts(userId, currentQuery, currentPage + 1);
+});
+
+function renderPageNumbers(currentPage, totalPages, totalContacts){
+  const container = document.getElementById("pageNumbers");
+  const pageInfo = document.getElementById("pageInfo");
+  const prevBtn = document.getElementById("prevPage");
+  const nextBtn = document.getElementById("nextPage");
+
+  container.innerHTML = "";
+
+  if (pageInfo) {
+    pageInfo.textContent = "Page " + currentPage + " of " + (totalPages || 1) +
+    " (" + totalContacts + " contacts)";
+  }
+
+  if (!totalPages || totalPages <= 1) {
+    if (prevBtn) prevBtn.disabled = true;
+    if (nextBtn) nextBtn.disabled = true;
+    return;
+  }
+
+  const maxVisible = 5;
+  let start = Math.max(1, currentPage - 2);
+  let end = Math.min(totalPages, start + maxVisible - 1);
+
+  if (end - start < maxVisible - 1){
+    start = Math.max(1, end - maxVisible + 1);
+  }
+
+  for (let i = start; i <= end; i++){
+    let btn = document.createElement("button");
+    btn.className = "btn btn-sm " + (i === currentPage ? "btn-primary" : "btn-outline-secondary");
+    btn.textContent = i;
+
+    btn.addEventListener("click", function(){
+      loadContacts(userId, currentQuery, i);
+    });
+
+    container.appendChild(btn);
+  }
+
+  document.getElementById("prevPage").disabled = (currentPage <= 1);
+  document.getElementById("nextPage").disabled = (currentPage >= totalPages);
+}
+
+function renderContactsList(contacts) {
+  const list = document.getElementById("contact-list");
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  if (!Array.isArray(contacts) || contacts.length === 0){
+    const p = document.createElement("div");
+    p.className = "text-muted p-2";
+    p.textContent = "No contacts found.";
+    list.appendChild(p);
+    return;
+  }
+
+  contacts.forEach((c) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.id = `${c.ID}`;
+    btn.className = "selector-item";
+    btn.textContent = `${c.FirstName ?? ""} ${c.LastName ?? ""}`.trim() || "(No name)";
+
+    btn.addEventListener("click", () => {
+      selectedContact = c;
+      showContactDetails(c);
+      showTab("contact-contact");
+    });
+
+    list.appendChild(btn);
+  });
+}
+
+async function loadContacts(userId, query="", page = 1) {
+  currentQuery = query;
+  currentPage = page;
+
+  const url = `https://poosdteam13.xyz/LAMPAPI/contacts.php` + 
+    `?userID=${encodeURIComponent(userId)}` +
+    `&query=${encodeURIComponent(query)}` +
+    `&limit=${pageSize}` + 
+    `&page=${page}`;
+  
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState !== 4) return;
+
+    if (xhr.status === 200) {
+      let response;
+      try {
+        response = JSON.parse(xhr.responseText);
+      } catch (e) {
+        console.error("Bad JSON from contacts.php:", xhr.responseText);
+        return;
+      }
+
+      const contacts = Array.isArray(response) ? response : (response.data || []);
+      renderContactsList(contacts);
+      if (!Array.isArray(response)){
+        renderPageNumbers(response.page || 1, response.totalPages || 1, response.total || contacts.length);
+      } else {
+        renderPageNumbers(1, 1, contacts.length);
+      }
+    } else {
+      console.error("Failed to load contacts:", xhr.status, xhr.responseText);
+    }
+  };
+
+  xhr.send(null);
+}
+
+// Basic cookie helper
+function getCookie(name) {
+  const parts = document.cookie.split(",").map(p => p.trim());
+  for (const part of parts) {
+    if (part.startsWith(name + "=")) return decodeURIComponent(part.substring(name.length + 1));
+  }
+  return "";
+}

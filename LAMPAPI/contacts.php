@@ -7,18 +7,52 @@ switch ($method) {
         $userID = $_GET['userID'] ?? null;
         $query = $_GET['query'] ?? ''; // Search string
 
+        //Pagination terms, minimum 50, max 100
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 50;
+        if ($limit < 1) $limit = 50;
+        if ($limit > 100) $limit = 100;
+
+        $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+        if ($page < 1) $page = 1;
+
+        $offset = ($page - 1) * $limit;
+
         // Create the partial search string
         $searchTerm = "%" . $query . "%";
 
-        // SQL: Must belong to user AND (match first name OR match last name)
-        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE UserID = ? AND (FirstName LIKE ? OR LastName LIKE ?)");
+        // 1) Total count (so front end can show "Page X of N")
+        // SQL: Count how many entries there are where the userID matches and either name matches
+        $countStmt = $conn->prepare(
+            "SELECT COUNT(*) AS total
+            FROM Contacts
+            WHERE UserID = ? AND (FirstName LIKE ? OR LastName LIKE ?)"
+        );
         
-        // Bind: 'i' for the UserID, 's' for both name placeholders
-        $stmt->bind_param("iss", $userID, $searchTerm, $searchTerm);
+        $countStmt->bind_param("iss", $userID, $searchTerm, $searchTerm);
+        $countStmt->execute();
+        $total = intval($countStmt->get_result()->fetch_assoc()['total'] ?? 0);
 		
-		$stmt->execute();
-		sendResponse($stmt->get_result()->fetch_all(MYSQLI_ASSOC));
-		break;
+        // Send Page results (Order By matters)
+        $stmt = $conn->prepare(
+            "SELECT *
+            FROM Contacts
+            WHERE UserID = ? AND (FirstName LIKE ? OR LastName LIKE ?)
+            ORDER BY LastName ASC, FirstName ASC, ID ASC
+            LIMIT ? OFFSET ?"
+        );
+        $stmt->bind_param("issii", $userID, $searchTerm, $searchTerm, $limit, $offset);
+        $stmt->execute();
+
+        $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        sendResponse([
+            "data" => $rows,
+            "page" => $page,
+            "limit" => $limit,
+            "total" => $total,
+            "totalPages" => ($limit > 0) ? (int)ceil($total / $limit) : 0
+        ]);
+        break;
 
     case 'POST':
         // Create
