@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contant Manager</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Search-Input-Responsive-with-Icon.css">
+    <link rel="stylesheet"
+        href="assets/css/Search-Input-Responsive-with-Icon.css">
     <link rel="stylesheet" href="assets/css/css/bss-overrides.css">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+        rel="stylesheet">
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/contacts.js" defer></script>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -23,191 +27,273 @@
 
         <aside class="sidebar">
             <div class="search-container">
-                <input type="text"
-                       id="searchInput"
-                       class="search-input"
-                       placeholder="Search names..."
-                       autocomplete="off" />
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Search names..." autocomplete="off" />
 
                 <button id="searchClear" class="search-clear hidden">×</button>
                 <div id="searchResults" class="search-results"></div>
             </div>
             <nav id="contact-list" class="selector-list"></nav>
             <div id="pager" class="mt-3 d-flex align-items-center gap-2">
-                <button id="prevPage" class="btn btn-sm btn-outline-secondary">«</button>
+                <button id="prevPage"
+                    class="btn btn-sm btn-outline-secondary">«</button>
                 <div id="pageNumbers" class="d-flex gap-1"></div>
-                <button id="nextPage" class="btn btn-sm btn-outline-secondary">»</button>
+                <button id="nextPage"
+                    class="btn btn-sm btn-outline-secondary">»</button>
             </div>
         </aside>
 
         <div class="icon">
-            <button type="button"
-                    id="add-btn"
-                    class="btn btn-primary btn-sm"
-                    data-target="contact-add">
+            <button type="button" id="add-btn" class="btn btn-primary btn-sm"
+                data-target="contact-add">
                 <i class="bi bi-person-plus"></i>
                 Add
             </button>
 
-            <button type="button"
-                    id="edit-btn"
-                    class="btn btn-secondary btn-sm"
-                    data-target="contact-edit">
+            <button type="button" id="edit-btn" class="btn btn-secondary btn-sm"
+                data-target="contact-edit">
                 <i class="bi bi-pencil"></i>
                 Edit
             </button>
 
-            <button type="button"
-                    id="contact-btn"
-                    class="btn btn-secondary btn-sm"
-                    data-target="contact-contact">
+            <button type="button" id="contact-btn"
+                class="btn btn-secondary btn-sm" data-target="contact-contact">
                 <i class="bi bi-eye"></i>
                 View
             </button>
 
-            <button type="button"
-                    id="delete-btn"
-                    class="btn btn-danger btn-sm"
-                    data-target="contact-contact">
+            <button type="button" id="delete-btn" class="btn btn-danger btn-sm"
+                data-target="contact-contact">
                 <i class="bi bi-trash"></i>
                 Delete
             </button>
 
-            <button type="button"
-                    id="signout-btn"
-                    class="btn btn-secondary btn-sm ms-auto"
-                    data-target="settings-edit">
+            <button type="button" id="signout-btn"
+                class="btn btn-secondary btn-sm ms-auto"
+                data-target="settings-edit">
                 <i class="bi bi-box-arrow-right"></i>
                 Sign Out
             </button>
         </div>
 
         <main class="contact-list">
-            <div class="tab" id="contact-add">
+            <div class="panel" id="contact-add">
                 <form id="add-contact-form" class="contact-form-card">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                        <h3 class="h5 mb-3">Add Contact</h3>
+                            <h3 class="h5 mb-3">Add Contact</h3>
 
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                            <label for="add-firstName" class="form-label">First name</label>
-                            <input type="text" id="add-firstName" class="form-control" placeholder="John" required>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="add-firstName"
+                                        class="form-label">First name</label>
+                                    <input type="text" id="add-firstName"
+                                        class="form-control" placeholder="John"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="add-lastName"
+                                        class="form-label">Last name</label>
+                                    <input type="text" id="add-lastName"
+                                        class="form-control" placeholder="Doe"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="add-phone"
+                                        class="form-label">Phone</label>
+                                    <input type="tel" id="add-phone"
+                                        class="form-control"
+                                        placeholder="(407) 555-1234" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="add-email"
+                                        class="form-label">Email</label>
+                                    <input type="email" id="add-email"
+                                        class="form-control"
+                                        placeholder="john@example.com" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="add-address"
+                                        class="form-label">Address</label>
+                                    <input type="text" id="add-address"
+                                        class="form-control"
+                                        placeholder="123 Main St, Orlando, FL, 33333">
+                                </div>
                             </div>
 
-                            <div class="col-md-6">
-                            <label for="add-lastName" class="form-label">Last name</label>
-                            <input type="text" id="add-lastName" class="form-control" placeholder="Doe" required>
+                            <div class="d-flex gap-2 mt-4">
+                                <button type="submit" id="add-save"
+                                    class="btn btn-primary">Save
+                                    Contact</button>
+                                <button type="button" id="add-cancel"
+                                    class="btn btn-outline-secondary">Cancel</button>
                             </div>
 
-                            <div class="col-md-6">
-                            <label for="add-phone" class="form-label">Phone</label>
-                            <input type="tel" id="add-phone" class="form-control" placeholder="(407) 555-1234" required>
+                            <div class="mt-2">
+                                <span id="addResult"
+                                    class="text-danger fw-bold"></span>
                             </div>
-
-                            <div class="col-md-6">
-                            <label for="add-email" class="form-label">Email</label>
-                            <input type="email" id="add-email" class="form-control" placeholder="john@example.com" required>
-                            </div>
-
-                            <div class="col-md-6">
-                            <label for="add-address" class="form-label">Address</label>
-                            <input type="text" id="add-address" class="form-control" placeholder="123 Main St, Orlando, FL, 33333">
-                            </div>
-                        </div>
-
-                        <div class="d-flex gap-2 mt-4">
-                            <button type="submit" id="add-save" class="btn btn-primary">Save Contact</button>
-                            <button type="button" id="add-cancel" class="btn btn-outline-secondary">Cancel</button>
-                        </div>
-
-                        <div class="mt-2">
-                            <span id="addResult" class="text-danger fw-bold"></span>
-                        </div>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="tab active" id="contact-contact">
-                <div id="contact-details"></div>
-                
-                <div id="contact-actions" class="mt-3">
-                    <div id="delete-modal" class="d-none">
-                        <div class="modal-backdrop show"></div>
-                        <div class="modal d-block" tabindex="-1">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" style="color:black">Delete contact?</h5>
-                                    <button type="button" class="btn-close" id="delete-cancel-x"></button>
+            <div class="panel active" id="contact-contact">
+
+                <div class="card shadow-sm">
+                    <div class="card-body">
+
+                        <div
+                            class="d-flex align-items-start justify-content-between gap-3">
+                            <div>
+                                <h2 class="h5 mb-1" id="detail-name">(Select a
+                                    contact)</h2>
+                                <div class="text-muted small"
+                                    id="detail-subtitle">Contact details</div>
+                            </div>
+
+                            <!-- Optional: small avatar circle -->
+                            <div class="rounded-circle bg-secondary-subtle d-flex align-items-center justify-content-center"
+                                style="width:48px;height:48px;"
+                                aria-hidden="true">
+                                <span class="fw-semibold text-secondary"
+                                    id="detail-initials">?</span>
+                            </div>
+                        </div>
+
+                        <hr class="my-3">
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="small text-muted">Email</div>
+                                <div class="fw-medium">
+                                    <a id="detail-email" href="#"
+                                        class="text-decoration-none">—</a>
                                 </div>
-                                <div class="modal-body">
-                                    <p class="mb-1" style="color: black">Are you sure you want to delete:</p>
-                                    <div id="delete-preview" class="p-2 border rounded" style="color: black !important;"></div>
-                                    <div id="deleteResults" class="text-danger fw-bold mt-2"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="small text-muted">Phone</div>
+                                <div class="fw-medium">
+                                    <a id="detail-phone" href="#"
+                                        class="text-decoration-none">—</a>
                                 </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-secondary" id="delete-cancel">Cancel</button>
-                                    <button class="btn btn-danger" id="delete-confirm">Delete</button>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="small text-muted">Address</div>
+                                <div class="fw-medium" id="detail-address">—
                                 </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="contact-actions" class="mt-3">
+                <div id="delete-modal" class="d-none">
+                    <div class="modal-backdrop show"></div>
+                    <div class="modal d-block" tabindex="-1">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="color:black">
+                                    Delete contact?</h5>
+                                <button type="button" class="btn-close"
+                                    id="delete-cancel-x"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="mb-1" style="color: black">Are you
+                                    sure you want to delete:</p>
+                                <div id="delete-preview"
+                                    class="p-2 border rounded"
+                                    style="color: black !important;"></div>
+                                <div id="deleteResults"
+                                    class="text-danger fw-bold mt-2"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary"
+                                    id="delete-cancel">Cancel</button>
+                                <button class="btn btn-danger"
+                                    id="delete-confirm">Delete</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div class="tab" id="contact-edit">
+
+    
+            <div class="panel" id="contact-edit">
                 <form id="edit-contact-form" class="contact-form-card">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                        <h3 class="h5 mb-3">Edit Contact</h3>
+                            <h3 class="h5 mb-3">Edit Contact</h3>
 
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                            <label for="edit-firstName" class="form-label">First name</label>
-                            <input type="text" id="edit-firstName" class="form-control" required>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="edit-firstName" class="form-label">First
+                                        name</label>
+                                    <input type="text" id="edit-firstName"
+                                        class="form-control" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="edit-lastName" class="form-label">Last
+                                        name</label>
+                                    <input type="text" id="edit-lastName"
+                                        class="form-control" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="edit-phone"
+                                        class="form-label">Phone</label>
+                                    <input type="tel" id="edit-phone"
+                                        class="form-control" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="edit-email"
+                                        class="form-label">Email</label>
+                                    <input type="email" id="edit-email"
+                                        class="form-control" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="edit-address"
+                                        class="form-label">Address</label>
+                                    <input type="text" id="edit-address"
+                                        class="form-control">
+                                </div>
                             </div>
 
-                            <div class="col-md-6">
-                            <label for="edit-lastName" class="form-label">Last name</label>
-                            <input type="text" id="edit-lastName" class="form-control" required>
+                            <div class="d-flex gap-2 mt-4">
+                                <button type="submit" id="edit-save"
+                                    class="btn btn-primary">Save Changes</button>
+                                <button type="button" id="edit-cancel"
+                                    class="btn btn-outline-secondary">Cancel</button>
                             </div>
 
-                            <div class="col-md-6">
-                            <label for="edit-phone" class="form-label">Phone</label>
-                            <input type="tel" id="edit-phone" class="form-control" required>
+                            <div class="mt-2">
+                                <span id="editResult"
+                                    class="text-danger fw-bold"></span>
                             </div>
-
-                            <div class="col-md-6">
-                            <label for="edit-email" class="form-label">Email</label>
-                            <input type="email" id="edit-email" class="form-control" required>
-                            </div>
-
-                            <div class="col-md-6">
-                            <label for="edit-address" class="form-label">Address</label>
-                            <input type="text" id="edit-address" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="d-flex gap-2 mt-4">
-                            <button type="submit" id="edit-save" class="btn btn-primary">Save Changes</button>
-                            <button type="button" id="edit-cancel" class="btn btn-outline-secondary">Cancel</button>
-                        </div>
-
-                        <div class="mt-2">
-                            <span id="editResult" class="text-danger fw-bold"></span>
-                        </div>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="tab" id="contact-delete">
+            <div class="panel" id="contact-delete">
             </div>
         </main>
     </div>
 </body>
 
 <footer class="site-footer">
-    <span>© COP 4331C - Team 13: Aviel Dahaman - Luna Fuller - Tim Fulton - Julio Maldonado - Fabian Nunez - Luciano Paredes - Emmanuel Santiago </span>
+    <span>© COP 4331C - Team 13: Aviel Dahaman - Luna Fuller - Tim Fulton -
+        Julio Maldonado - Fabian Nunez - Luciano Paredes - Emmanuel Santiago
+    </span>
     <nav>
         <a href="#">Privacy</a>
         <a href="#">Terms</a>

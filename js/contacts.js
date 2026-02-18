@@ -191,6 +191,23 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
+//Showing and filling out Edit form
+function openEditContact(){
+  if (!selectedContact || !selectedContact.ID) return;
+
+  document.getElementById("edit-firstName").value = selectedContact.FirstName || "";
+  document.getElementById("edit-lastName").value  = selectedContact.LastName || "";
+  document.getElementById("edit-email").value     = selectedContact.Email || "";
+  document.getElementById("edit-phone").value     = selectedContact.PhoneNumber || "";
+  document.getElementById("edit-address").value   = selectedContact.Address || "";
+
+  const msg = document.getElementById("editResult");
+  if (msg) msg.textContent = "";
+
+  showTab("contact-edit")
+}
+
+//Submitting Edit form
 document.addEventListener("DOMContentLoaded", () => {
   const cancel = document.getElementById("edit-cancel");
   if (cancel) cancel.addEventListener("click", () => showTab("contact-contact"));
@@ -245,20 +262,6 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 });
 
-function openEditContact(){
-  if (!selectedContact || !selectedContact.ID) return;
-
-  document.getElementById("edit-firstName").value = selectedContact.FirstName || "";
-  document.getElementById("edit-lastName").value  = selectedContact.LastName || "";
-  document.getElementById("edit-email").value     = selectedContact.Email || "";
-  document.getElementById("edit-phone").value     = selectedContact.PhoneNumber || "";
-  document.getElementById("edit-address").value   = selectedContact.Address || "";
-
-  const msg = document.getElementById("editResult");
-  if (msg) msg.textContent = "";
-
-  showTab("contact-edit")
-}
 
 /* =========================
    Delete Contact
@@ -316,7 +319,6 @@ document.addEventListener("DOMContentLoaded", () => {
           selectedContact = null;
 
           showTab("contact-contact");
-          document.getElementById("contact-details").replaceChildren();
           loadContacts(userId, "");
         } else {
           document.getElementById("deleteResults").textContent = "Failed to delete contact.";
@@ -332,17 +334,14 @@ document.addEventListener("DOMContentLoaded", () => {
 ========================= */
 
 function showContactDetails(contact){
-  console.log("showContactDetails contact:", contact);
+  console.log("showContactDetails called with:", contact);
+  if (!contact) return;
+  
   selectedContact = contact;
-
-  let details = document.getElementById("contact-details");
-  console.log("contact-details element:", details);
-  if (!details) return;
-
-  details.innerHTML = "";
 
   const first = contact.FirstName ?? "";
   const last = contact.LastName ?? "";
+  const fullName = (first + " " + last).trim() || ("No name")
   const phone = contact.PhoneNumber ?? "";
   const email = contact.Email ?? "";
   const address = contact.Address ?? "";
@@ -350,37 +349,51 @@ function showContactDetails(contact){
 
   const initials = `${first.charAt(0)}${last.charAt(0)}`.toUpperCase() || "??";
 
-  //Create Profile picture area
-  const img = document.createElement("img");
-  img.className = "pfp-picture";
-  img.src = "pfp.png";
-  img.alt = "User Profile";
-  img.style.display = "none";
-  //Fill it with initials
-  const imgDiv = document.createElement("div");
-  imgDiv.className = "pfp-placeholder";
-  imgDiv.textContent = initials;
-  
-  //Display contact info
-  const info = document.createElement("p");
-  info.innerHTML = `
-    ${first} ${last}<br/>
-    ${phone}${email ? ` - ${email}` : ""}<br/>
-    ${address}<br/>
-    Created: ${date}`;
-  
-  //Append into the tab
-  details.appendChild(img);
-  details.appendChild(imgDiv);
-  details.appendChild(info);
+  //Name
+  document.getElementById("detail-name").textContent = fullName;
+  document.getElementById("detail-initials").textContent = initials;
+
+  //Email
+  const emailElement = document.getElementById("detail-email");
+  if (email){
+    emailElement.textContent = email;
+    emailElement.href = `mailto:${email}`;
+    emailElement.classList.remove("text-muted");
+  } else {
+    emailElement.textContent = "-";
+    emailElement.href = "#";
+    emailElement.classList.add("text-muted");
+  }
+
+  //Phone
+  const phoneElement = document.getElementById("detail-phone");
+  if (phone){
+    phoneElement.textContent = phone;
+    //removing non-digits for phone number
+    const tel = phone.replace(/[^\d+]/g,"");
+    phoneElement.href = `tel:${tel}`;
+    phoneElement.classList.remove("text-muted");
+  } else {
+    phoneElement.textContent = "-";
+    phoneElement.href = "#";
+    phoneElement.classList.add("text-muted");
+  }
+
+  //Address
+  document.getElementById("detail-address").textContent = address || "-"
 }
 
 
+
+
 function showTab(tabID){
-  document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+  document.querySelectorAll(".panel").forEach(tab => tab.classList.remove("active"));
   const target = document.getElementById(tabID);
 
   if (target) target.classList.add("active");
+
+  const main = document.querySelector("main.contact-list");
+  if (main) main.scrollTop = 0;
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -31,6 +31,14 @@ body {
         "sidebar content";
 }
 
+main.contact-list {
+  grid-area: content;
+  min-height: 0;   /* lets it scroll correctly */
+  min-width: 0;
+  overflow: auto;  /* right panel scrolls internally */
+}
+
+
 /* 
  *  Icon bar
  */
@@ -99,11 +107,11 @@ body {
     color: white;
 }
 
-.tab {
+.panel {
     display: none;
 }
 
-.tab.active {
+.panel.active {
     display: block
 }
 
