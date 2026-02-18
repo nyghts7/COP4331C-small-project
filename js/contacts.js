@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       LastName: document.getElementById("add-lastName").value.trim(),
       Email: document.getElementById("add-email").value.trim(),
       PhoneNumber: document.getElementById("add-phone").value.trim(),
+      Address: document.getElementById("add-address").value.trim(),
     };
     let jsonPayload = JSON.stringify(payload)
 
@@ -189,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
       LastName: document.getElementById("edit-lastName").value.trim(),
       Email: document.getElementById("edit-email").value.trim(),
       PhoneNumber: document.getElementById("edit-phone").value.trim(),
+      Address: document.getElementById("edit-address").value.trim(),
     };
     let jsonPayload = JSON.stringify(payload)
 
@@ -232,6 +234,7 @@ function openEditContact(){
   document.getElementById("edit-lastName").value  = selectedContact.LastName || "";
   document.getElementById("edit-email").value     = selectedContact.Email || "";
   document.getElementById("edit-phone").value     = selectedContact.PhoneNumber || "";
+  document.getElementById("edit-address").value   = selectedContact.Address || "";
 
   const msg = document.getElementById("editResult");
   if (msg) msg.textContent = "";
@@ -252,7 +255,7 @@ function openDeleteModal(){
     <div><strong>${selectedContact.FirstName || ""} ${selectedContact.LastName || ""}</strong></div>
     <div>${selectedContact.PhoneNumber || ""}</div>
     <div>${selectedContact.Email || ""}</div>
-    `;
+    <div>${selectedContact.Address || ""}`;
   
   document.getElementById("deleteResults").textContent = "";
 
@@ -315,6 +318,8 @@ function showContactDetails(contact){
   const last = contact.LastName ?? "";
   const phone = contact.PhoneNumber ?? "";
   const email = contact.Email ?? "";
+  const address = contact.Address ?? "";
+  const date = contact.DateCreated ?? "";
 
   const initials = `${first.charAt(0)}${last.charAt(0)}`.toUpperCase() || "??";
 
@@ -333,7 +338,9 @@ function showContactDetails(contact){
   const info = document.createElement("p");
   info.innerHTML = `
     ${first} ${last}<br/>
-    ${phone}${email ? ` - ${email}` : ""}`;
+    ${phone}${email ? ` - ${email}` : ""}<br/>
+    ${address}<br/>
+    Created: ${date}`;
   
   //Append into the tab
   details.appendChild(img);

@@ -37,7 +37,7 @@ switch ($method) {
             "SELECT *
             FROM Contacts
             WHERE UserID = ? AND (FirstName LIKE ? OR LastName LIKE ?)
-            ORDER BY LastName ASC, FirstName ASC, ID ASC
+            ORDER BY FirstName ASC, LastName ASC, ID ASC
             LIMIT ? OFFSET ?"
         );
         $stmt->bind_param("issii", $userID, $searchTerm, $searchTerm, $limit, $offset);
