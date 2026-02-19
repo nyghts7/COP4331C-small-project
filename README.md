@@ -3,6 +3,8 @@ Our project creates a contact manager web app hosted on a remote server using a 
 
 Our site: https://poosdteam13.xyz
 
+Our project file structure mirrors the /var/www/html/ directory on the LAMP server so that all updates on GitHub are pushed to the server by GitHub actions. 
+
 ## Database 
 
 - MySQL database with two tables representing a one to many relationship.
@@ -44,6 +46,7 @@ Dates: January–February 2026
 
 Scope:
 
+- Artwork (logos)
 - Debugging front-end JavaScript (event listeners, DOM rendering, edit/delete behavior) and HTML
 - Troubleshooting asynchronous API calls and refresh timing issues
 - MySQL query assistance
@@ -54,6 +57,7 @@ Scope:
 
 Nature of Use:
 
+- Sora (ChatGPT) created main logo and favicon
 - Generated example snippets for JavaScript fetch/XHR structure and REST endpoint formatting
 - Helped diagnose logical bugs (e.g., stale contact list refresh, misplaced DOM injection, event propagation issues)
 - Provided explanations of asynchronous behavior and API response timing
