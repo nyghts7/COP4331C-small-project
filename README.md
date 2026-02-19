@@ -37,8 +37,11 @@ Future features that could be implemented for professional quality:
 AI Assistance Disclosure
 
 This project was developed with assistance from generative AI tools:
+
 Tool: ChatGPT (OpenAI GPT-5 family), accessed via chat.openai.com
+
 Dates: January–February 2026
+
 Scope:
 
 - Debugging front-end JavaScript (event listeners, DOM rendering, edit/delete behavior) and HTML
