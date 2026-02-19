@@ -381,6 +381,8 @@ function showContactDetails(contact){
 
   //Address
   document.getElementById("detail-address").textContent = address || "-"
+
+  document.getElementById("detail-date").textContent = date || "-";
 }
 
 
