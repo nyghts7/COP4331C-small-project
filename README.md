@@ -1,69 +1,59 @@
 # Intro
+Our project creates a contact manager web app hosted on a remote server using a LAMP stack. Our goals are to implement CRUD functionality in the web app. The front end uses AJAX techniques to communicate with back end REST API, with MySQL as the underlying database.
+
 Our site: https://poosdteam13.xyz
-(Maybe register another domain with final name of Contact Manager?)
-
-# Reminders
-
-***We have a group check in this Friday at the 4pm lab. We all have to attend the 4pm lab.***
-
-
-# To Do
 
 ## Database 
 
-- [ ] Create SQL Tables
-- [ ] create ERD
+- MySQL database with two tables representing a one to many relationship.
+- [ERD](Documents/ERD%20Diagram.pdf)
 
 ## Front End
 
-- [ ] Contacts page
-- [ ] javascript for all pages
-   * Contacts will need JS to search and populate tables
-   * Index, createLogin, and Login need to send credentials and receive answers
-- [ ] Lighthouse ratings can be improved
-   * images can be optimized for performance
-   * accessibility should be higher
+- We use Javascript to improve page functionality and XHR requests to communicate with the back end APIs.
+- We use the Bootstrap framework to polish our UI for a modern look.
+- [Use Case Diagram](Documents/Use%20Case%20Diagram.png)
 
 ## Back End
 
-- [ ] API points need to be done
-   * Any already started? Do we have requirements for the database tables? 
-   * (can have as many API points as we want, but can only demo 2 at presentation)
-- [ ] SwaggerHub API Demonstration
-
-## Project Manager
-
-- [ ] PowerPoint Slides
-   * everyone should contribute to slides so you know what you're presenting.
-- [ ] Gantt chart
-   * based on how long stages of development took. Need input from people
+- We implemented a RESTful API to handle user data and database operations.
+- We used three end points: login, registration, and contacts.
+- Sensitive data is sent and received through JSON objects while simple requests for data can be made through URL (once authenticated)
 
 
-# Rubric Checklist
 
+## Wish List
 
-- [ ] PowerPoint submitted on time - 5 points
-- [ ] Professional Powerpoint slides - 5 points
-- [ ] All members participate - 5 points
-- [ ] Use case diagram - 5 points
-- [ ] Gantt chart - 5 points
-- [ ] SwaggerHub API demonstration (of at least one, and not more than two APIs) - 5 points 
-- [ ] Effective server-side search (partial match) - 5 points
-- [ ] Working project demonstration - 20 points
-- [ ] Adherence to current standards - 10 points
-- [ ] ERD - 5 points
-- [ ] Explanation of technology - 5 points
-- [ ] Lighthouse accessibility report - 5 points
-- [ ] Instructor discretionary excellence points - 5 points
-- [ ] Contribution assessment based on GitHub activity (commit frequency, consistency, code contributions, code reviews, participation in documentation) - 10 points
-- [ ] Team evaluation of individual contribution - 5 points
+Future features that could be implemented for professional quality:
 
-# Wish List
+- Import feature
+- Groups for contacts
+- Select multiple people for email
+- Forgot Password reset
+- Settings for Contacts page appearance and customization
 
-If we get done with the basic rubric, some things to help ensure professional quality and good professor evaluation
+## AI Use
 
-- [ ] Import??
-- [ ] Direct email or call button?
-- [ ] Groups for contacts (like businesses and grouping people)?
-- [ ] Select multiple for email?
-- [ ] Forgot Password reset?
+AI Assistance Disclosure
+
+This project was developed with assistance from generative AI tools:
+Tool: ChatGPT (OpenAI GPT-5 family), accessed via chat.openai.com
+Dates: January–February 2026
+Scope:
+
+- Debugging front-end JavaScript (event listeners, DOM rendering, edit/delete behavior) and HTML
+- Troubleshooting asynchronous API calls and refresh timing issues
+- MySQL query assistance
+- GitHub Actions CI/CD SSH deployment debugging
+- Apache/SSL configuration troubleshooting (Certbot issues)
+- Lighthouse performance optimization guidance (caching, Bootstrap minimization)
+- Gantt chart structuring
+
+Nature of Use:
+
+- Generated example snippets for JavaScript fetch/XHR structure and REST endpoint formatting
+- Helped diagnose logical bugs (e.g., stale contact list refresh, misplaced DOM injection, event propagation issues)
+- Provided explanations of asynchronous behavior and API response timing
+- Suggested debugging strategies for deployment and SSH key configuration
+
+All AI-generated suggestions were reviewed, tested, and substantially modified before integration. The final implementation, database schema, API structure, and deployment configuration reflect our own understanding and team decisions. AI was used as a debugging assistant, architectural sounding board, and conceptual explainer—not as a substitute for implementation.
