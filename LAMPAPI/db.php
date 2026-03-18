@@ -18,7 +18,7 @@ if (strtoupper($_SERVER['REQUEST_METHOD']) == 'OPTIONS') {
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 try {
-    $conn = new mysqli("localhost", "TheBeast", "PoosdTeam!@#", "ContactManager");
+    $conn = new mysqli("localhost", "USER_HIDDEN", "PASSWORD_HIDDEN", "ContactManager");
 } catch (mysqli_sql_exception $e) {
     sendResponse(["error" => "Database connection failed: " . $e->getMessage()], 500);
 }
